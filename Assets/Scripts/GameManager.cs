@@ -7,11 +7,13 @@ public enum Turn { PLAYERTURN, ENEMYTURN }
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private PlayerInventory plrInventory = null;
+    [SerializeField] private Sprite emptyBottleImage = null;
+
     GameObject canvas;
     GameObject currentEnemy;
     bool playerAlive;
     bool enemyAlive;
-    Coroutine batteRoutine = null;
+    Coroutine battleCoroutine = null;
 
     Turn currentTurn = Turn.PLAYERTURN;
 
@@ -20,7 +22,7 @@ public class GameManager : MonoBehaviour
     Image canvas_potionSlot03;
     Image canvas_rerollButton;
     Image canvas_acornButton;
-    Sprite emptyBottleImage;
+    
     Potion potionSlot_01;
     Potion potionSlot_02;
     Potion potionSlot_03;
@@ -39,7 +41,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        emptyBottleImage = Resources.Load("bottle_empty") as Sprite;
         canvas = GameObject.Find("Canvas");
         enemy_01 = Resources.Load("Enemy_01") as GameObject;
         canvas_potionSlot01 = canvas.transform.Find("potionSlot_01").GetComponent<Image>();
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
         canvas_potionSlot03 = canvas.transform.Find("potionSlot_03").GetComponent<Image>();
         canvas_rerollButton = canvas.transform.Find("potions_reroll").GetComponent<Image>();
         canvas_acornButton = canvas.transform.Find("acornShoot").GetComponent<Image>();
-        if (batteRoutine == null)
+        if (battleCoroutine == null)
         {
             StartCoroutine(BattlePhase());
         }
@@ -71,7 +72,7 @@ public class GameManager : MonoBehaviour
                     currentEnemy.GetComponent<EnemyController>().ReceivePotionAttackAndCheckIfDead(chosenPotion);
                     chosenPotion = potionSlot_01 = potionSlot_02 = potionSlot_03 = null;
                     TogglePlayerButtons(false);
-                    yield return new WaitForSeconds(2);
+                    yield return new WaitForSeconds(1);
                     EnemyTurn();
                     print("enemy turn");
                     yield return null;
@@ -82,6 +83,8 @@ public class GameManager : MonoBehaviour
             {
                 currentEnemy.GetComponent<EnemyController>().ApplyTurnEffects();
                 yield return new WaitForSeconds(1);
+                currentEnemy.GetComponent<EnemyController>().ChooseAttack();
+                yield return new WaitForSeconds(0.5f);
                 PlayerTurn();
                 print("player turn");
                 yield return null;
@@ -110,26 +113,44 @@ public class GameManager : MonoBehaviour
         currentTurn = Turn.PLAYERTURN;
         TogglePlayerButtons(true);
         print("toggled buttons on");
-        HandlePotions();
+        FillPotionSlots();
     }
 
     public void ThrowPotion_slot1()
     {
         chosenPotion = potionSlot_01;
-        plrInventory.AddPotion(potionSlot_02);
-        plrInventory.AddPotion(potionSlot_03);
+        if (potionSlot_02 != null)
+        {
+            plrInventory.AddPotion(potionSlot_02);
+        }
+        if (potionSlot_03 != null)
+        {
+            plrInventory.AddPotion(potionSlot_03);
+        }
     }
     public void ThrowPotion_slot2()
     {
         chosenPotion = potionSlot_02;
-        plrInventory.AddPotion(potionSlot_01);
-        plrInventory.AddPotion(potionSlot_03);
+        if (potionSlot_01 != null)
+        {
+            plrInventory.AddPotion(potionSlot_01);
+        }
+        if (potionSlot_03 != null)
+        {
+            plrInventory.AddPotion(potionSlot_03);
+        }
     }
     public void ThrowPotion_slot3()
     {
         chosenPotion = potionSlot_03;
-        plrInventory.AddPotion(potionSlot_01);
-        plrInventory.AddPotion(potionSlot_02);
+        if (potionSlot_01 != null)
+        {
+            plrInventory.AddPotion(potionSlot_01);
+        }
+        if (potionSlot_02 != null)
+        {
+            plrInventory.AddPotion(potionSlot_02);
+        }
     }
     public void RerollPotions()
     {
@@ -156,8 +177,9 @@ public class GameManager : MonoBehaviour
         canvas_rerollButton.gameObject.SetActive(state);
         canvas_acornButton.gameObject.SetActive(state);
     }
-    void HandlePotions()
+    void FillPotionSlots()
     {
+        // Potion 1
         potionSlot_01 = plrInventory.GetRandomPotion();
         if (potionSlot_01 != null)
         {
@@ -167,6 +189,8 @@ public class GameManager : MonoBehaviour
         {
             canvas_potionSlot01.sprite = emptyBottleImage;
         }
+
+        // Potion 2
         potionSlot_02 = plrInventory.GetRandomPotion();
         if (potionSlot_02 != null)
         {
@@ -176,6 +200,8 @@ public class GameManager : MonoBehaviour
         {
             canvas_potionSlot02.sprite = emptyBottleImage;
         }
+
+        // Potion 3
         potionSlot_03 = plrInventory.GetRandomPotion();
         if (potionSlot_03 != null)
         {

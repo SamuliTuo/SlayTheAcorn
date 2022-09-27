@@ -29,7 +29,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (playerPotions.Count > 0)
         {
-            int i = Random.Range(0, playerPotions.Count - 1);
+            int i = Random.Range(0, playerPotions.Count);
             Potion pot = playerPotions[i];
             playerPotions.RemoveAt(i);
             return pot;
