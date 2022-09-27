@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalAttackDamageRange: {x: 5, y: 10}
   normalAtt_chance: 0.5
-  statusEffect1: 0
+  statusEffect1: 2
   status1_chance: 0.1
-  statusEffect2: 0
+  statusEffect2: 3
   status2_chance: 0.1
-  statusEffect3: 0
+  statusEffect3: 3
   status3_chance: 0.1
   dot: 1
   dot_damagePerTick: 0.5
