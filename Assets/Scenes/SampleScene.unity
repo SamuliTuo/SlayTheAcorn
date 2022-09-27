@@ -425,7 +425,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 628559641}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 958721844}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ThrowPotion_slot2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &628559641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,7 +890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 745cafd949de0cc4880c02ad5849880a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potion_01: {fileID: 11400000, guid: ff170d2a79db35e4e99ccea694434b87, type: 2}
+  plrInventory: {fileID: 1428803596}
 --- !u!4 &958721845
 Transform:
   m_ObjectHideFlags: 0
@@ -980,7 +992,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 958721844}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ThrowPotion
+        m_MethodName: ThrowPotion_slot1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1174,6 +1186,7 @@ GameObject:
   - component: {fileID: 1428803593}
   - component: {fileID: 1428803595}
   - component: {fileID: 1428803594}
+  - component: {fileID: 1428803596}
   m_Layer: 5
   m_Name: Player
   m_TagString: Untagged
@@ -1239,6 +1252,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428803592}
   m_CullTransparentMesh: 1
+--- !u!114 &1428803596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428803592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a047e9de42c328a4e91b84246066c33f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPotions:
+  - {fileID: 11400000, guid: ff170d2a79db35e4e99ccea694434b87, type: 2}
+  - {fileID: 11400000, guid: ff170d2a79db35e4e99ccea694434b87, type: 2}
+  - {fileID: 11400000, guid: ff170d2a79db35e4e99ccea694434b87, type: 2}
+  acornCount: 0
+  playerHP: 50
 --- !u!224 &1454583335 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6390519422285129272, guid: 0f0493f70dc32314883d90459c832624, type: 3}
@@ -1327,7 +1358,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1787869337}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 958721844}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ThrowPotion_slot3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1787869337
 MonoBehaviour:
   m_ObjectHideFlags: 0
