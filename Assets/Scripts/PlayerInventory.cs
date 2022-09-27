@@ -4,10 +4,26 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
+    
+    public static PlayerInventory instance;
+    
     public List<Potion> playerPotions = new List<Potion>();
     public int acornCount = 0;
 
     [SerializeField] private float playerHP = 50;
+
+    
+    void Start()
+    {
+        if(PlayerInventory.instance) {
+            Destroy(this.gameObject);
+        }
+        else{
+            PlayerInventory.instance = this;
+            Debug.Log("INSTANCE CREATED");
+            DontDestroyOnLoad(this.gameObject);    
+        }
+    }
 
     public void AddAcorns(int count) { acornCount += count; }
     public bool TryToRemoveAcorns(int amount)
