@@ -21,6 +21,8 @@ public class PathCamera : MonoBehaviour
     {
         float t = Time.time * 2f;
         this.transform.position = this.curve.GetPoint(this.phase)+ new Vector3( Mathf.Sin(t)*shake.x,Mathf.Sin(t*0.45f)*shake.y,Mathf.Sin(t*0.65f)*shake.z );
-        this.transform.LookAt(this.curve.GetPoint(this.phase)+new Vector3(0f,0f,10f) + this.curve.GetDirection(this.phase)*4f);
+        this.transform.LookAt(this.curve.GetPoint(this.phase)+new Vector3(0f,0f,10f) + this.curve.GetDirection(this.phase)*0f);
+        
+        this.phase += Time.deltaTime*0.05f;
     }
 }

@@ -27,7 +27,15 @@ public class ForestInteraction : MonoBehaviour
         if(ray.HasValue && Physics.Raycast( ray.Value, out hit ))
         {
             Debug.Log("Hitting");
-            hit.collider.gameObject.SetActive(false);
+            if(hit.collider.tag == "Ratamo")
+            {
+                hit.collider.gameObject.SetActive(false);
+            } 
+            if(hit.collider.tag == "Acord")
+            {
+                hit.collider.gameObject.SetActive(false);
+            }
+            
         }
     }
 }
