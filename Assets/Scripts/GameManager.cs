@@ -15,6 +15,12 @@ public class GameManager : MonoBehaviour
 
     Turn currentTurn = Turn.PLAYERTURN;
 
+    Image canvas_potionSlot01;
+    Image canvas_potionSlot02;
+    Image canvas_potionSlot03;
+    Image canvas_rerollButton;
+    Image canvas_acornButton;
+    Sprite emptyBottleImage;
     Potion potionSlot_01;
     Potion potionSlot_02;
     Potion potionSlot_03;
@@ -33,8 +39,14 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        emptyBottleImage = Resources.Load("bottle_empty") as Sprite;
         canvas = GameObject.Find("Canvas");
         enemy_01 = Resources.Load("Enemy_01") as GameObject;
+        canvas_potionSlot01 = canvas.transform.Find("potionSlot_01").GetComponent<Image>();
+        canvas_potionSlot02 = canvas.transform.Find("potionSlot_02").GetComponent<Image>();
+        canvas_potionSlot03 = canvas.transform.Find("potionSlot_03").GetComponent<Image>();
+        canvas_rerollButton = canvas.transform.Find("potions_reroll").GetComponent<Image>();
+        canvas_acornButton = canvas.transform.Find("acornShoot").GetComponent<Image>();
         if (batteRoutine == null)
         {
             StartCoroutine(BattlePhase());
@@ -44,6 +56,7 @@ public class GameManager : MonoBehaviour
     IEnumerator BattlePhase()
     {
         BattleStart(enemy_01);
+
         yield return null;
         while (playerAlive && enemyAlive)
         {
@@ -53,15 +66,25 @@ public class GameManager : MonoBehaviour
                 {
                     yield return null;
                 }
+                else
+                {
+                    currentEnemy.GetComponent<EnemyController>().ReceivePotionAttackAndCheckIfDead(chosenPotion);
+                    chosenPotion = potionSlot_01 = potionSlot_02 = potionSlot_03 = null;
+                    TogglePlayerButtons(false);
+                    yield return new WaitForSeconds(2);
+                    EnemyTurn();
+                    print("enemy turn");
+                    yield return null;
+                }
 
-                currentEnemy.GetComponent<EnemyController>().ReceivePotionAttackAndCheckIfDead(chosenPotion);
-                yield return new WaitForSeconds(2);
             }
-
             else if (currentTurn == Turn.ENEMYTURN)
             {
                 currentEnemy.GetComponent<EnemyController>().ApplyTurnEffects();
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(1);
+                PlayerTurn();
+                print("player turn");
+                yield return null;
             }
         }
         print("Combat ended, player or enemy died");
@@ -72,37 +95,23 @@ public class GameManager : MonoBehaviour
     void BattleStart(GameObject enemy)
     {
         chosenPotion = null;
-        currentTurn = Turn.PLAYERTURN;
         currentEnemy = enemy;
         playerAlive = true;
         enemyAlive = true;
+        PlayerTurn();
     }
-    
-    void ChangeTurns()
-    {
-        if (currentTurn == Turn.PLAYERTURN)
-        {
-            PlayerTurn();
-            currentTurn = Turn.ENEMYTURN;
-        }
-        else if (currentTurn == Turn.ENEMYTURN)
-        {
-            EnemyTurn();
-            currentTurn = Turn.PLAYERTURN;
-        }
-    }
+
     void EnemyTurn()
     {
-
+        currentTurn = Turn.ENEMYTURN;
     }
     void PlayerTurn()
     {
-        potionSlot_01 = plrInventory.GetRandomPotion();
-        potionSlot_02 = plrInventory.GetRandomPotion();
-        potionSlot_03 = plrInventory.GetRandomPotion();
+        currentTurn = Turn.PLAYERTURN;
+        TogglePlayerButtons(true);
+        print("toggled buttons on");
+        HandlePotions();
     }
-
-
 
     public void ThrowPotion_slot1()
     {
@@ -121,5 +130,60 @@ public class GameManager : MonoBehaviour
         chosenPotion = potionSlot_03;
         plrInventory.AddPotion(potionSlot_01);
         plrInventory.AddPotion(potionSlot_02);
+    }
+    public void RerollPotions()
+    {
+        if (potionSlot_01 != null)
+        {
+            plrInventory.AddPotion(potionSlot_01);
+        }
+        if (potionSlot_02 != null)
+        {
+            plrInventory.AddPotion(potionSlot_02);
+        }
+        if (potionSlot_03 != null)
+        {
+            plrInventory.AddPotion(potionSlot_03);
+        }
+        potionSlot_01 = potionSlot_02 = potionSlot_03 = null;
+    }
+
+    void TogglePlayerButtons(bool state)
+    {
+        canvas_potionSlot01.gameObject.SetActive(state);
+        canvas_potionSlot02.gameObject.SetActive(state);
+        canvas_potionSlot03.gameObject.SetActive(state);
+        canvas_rerollButton.gameObject.SetActive(state);
+        canvas_acornButton.gameObject.SetActive(state);
+    }
+    void HandlePotions()
+    {
+        potionSlot_01 = plrInventory.GetRandomPotion();
+        if (potionSlot_01 != null)
+        {
+            canvas_potionSlot01.sprite = potionSlot_01.image;
+        }
+        else
+        {
+            canvas_potionSlot01.sprite = emptyBottleImage;
+        }
+        potionSlot_02 = plrInventory.GetRandomPotion();
+        if (potionSlot_02 != null)
+        {
+            canvas_potionSlot02.sprite = potionSlot_02.image;
+        }
+        else
+        {
+            canvas_potionSlot02.sprite = emptyBottleImage;
+        }
+        potionSlot_03 = plrInventory.GetRandomPotion();
+        if (potionSlot_03 != null)
+        {
+            canvas_potionSlot03.sprite = potionSlot_03.image;
+        }
+        else
+        {
+            canvas_potionSlot03.sprite = emptyBottleImage;
+        }
     }
 }

@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum StatusEffect { NONE, CONFUSION, HALLUSINATION }
+public enum StatusEffect { NONE, DOT, CONFUSION, HALLUSINATION }
 public class EnemyController : MonoBehaviour
 {
     Dictionary<StatusEffect, int> currentStatuses = new Dictionary<StatusEffect, int>();
-    float hp;
+    float hp = 100;
 
     public bool ReceivePotionAttackAndCheckIfDead(Potion potion)
     {
@@ -23,13 +23,29 @@ public class EnemyController : MonoBehaviour
             return false;
     }
 
+    public void ChooseAttack()
+    {
+
+    }
+
     public void ApplyTurnEffects()
     {
         if (currentStatuses.Count > 0)
         {
+            Dictionary<StatusEffect, int> updatedEffects = new Dictionary<StatusEffect, int>();
             foreach (KeyValuePair<StatusEffect, int> status in currentStatuses)
             {
-                //status.Value
+                //apply effect
+                if (status.Value > 1)
+                {
+                    updatedEffects.Add(status.Key, status.Value - 1);
+                }
+            }
+            currentStatuses.Clear();
+
+            if (updatedEffects.Count > 0)
+            {
+                currentStatuses = updatedEffects;
             }
         }
     }

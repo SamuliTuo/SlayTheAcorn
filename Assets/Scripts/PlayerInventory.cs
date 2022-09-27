@@ -27,10 +27,14 @@ public class PlayerInventory : MonoBehaviour
 
     public Potion GetRandomPotion()
     {
-        int i = Random.Range(0, playerPotions.Count - 1);
-        Potion pot = playerPotions[i];
-        playerPotions.RemoveAt(i);
-        return pot;
+        if (playerPotions.Count > 0)
+        {
+            int i = Random.Range(0, playerPotions.Count - 1);
+            Potion pot = playerPotions[i];
+            playerPotions.RemoveAt(i);
+            return pot;
+        }
+        else return null;
     }
 
     public bool AddHpAndCheckIfDead(float amount)
