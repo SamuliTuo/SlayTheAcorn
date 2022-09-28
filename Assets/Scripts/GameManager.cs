@@ -94,11 +94,11 @@ public class GameManager : MonoBehaviour
                     while (chosenPotion == null)
                         yield return null;
 
+
                     flying_potion_slot.GetComponent<Image>().sprite = chosenPotion.image;
                     StartCoroutine(ThrowItemToEnemy());
                     if (enemyObject.GetComponent<EnemyController>().ReceivePotionAttackAndCheckIfDead(chosenPotion, plrInventory.isHallusinating) == true)
                     {
-                        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/Character/PlayerSling", gameObject);
                         enemyObject.GetComponent<EnemyController>().ResetEnemy();
                         enemyAlive = false;
                     }
@@ -126,7 +126,6 @@ public class GameManager : MonoBehaviour
                     yield return new WaitForSeconds(0.5f);
                     if (PlayerAlive)
                     {
-                        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/Character/EnemyAttack", gameObject);
                         PlayerTurnStart();
                         print("player turn");
                     }
