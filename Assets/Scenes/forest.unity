@@ -7980,6 +7980,15 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 28f6a1c25bef1ed4a843b75f2beadbc8, type: 2}
   - {fileID: 2100000, guid: 9ca4a9326fcc5eb4080eda8d9a41b30f, type: 2}
   - {fileID: 2100000, guid: 579fab0ac3fd394419126a04e07bffe0, type: 2}
+  combat:
+  - {fileID: 2100000, guid: db8f971619c28904b9d06f5d4d728b48, type: 2}
+  - {fileID: 2100000, guid: 88ebe80a455afb6468eb6acecf1e7b07, type: 2}
+  - {fileID: 2100000, guid: e97484a624156f947a781679da0fcfff, type: 2}
+  - {fileID: 2100000, guid: c27a729554aef50488a9f23975ef61b1, type: 2}
+  - {fileID: 2100000, guid: 57612c1d627c0b84f8e0c19976c1c8ab, type: 2}
+  - {fileID: 2100000, guid: ec3af24b84e077545a8305f7603b701d, type: 2}
+  runCombat: 0
+  current: 0
   state: 0
 --- !u!1 &804163016
 GameObject:
@@ -15719,7 +15728,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1861405102
 MonoBehaviour:
   m_ObjectHideFlags: 0
