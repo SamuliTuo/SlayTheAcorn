@@ -8,7 +8,11 @@ public class EnemyHider : MonoBehaviour
     void Start()
     {
         // DISABLE others
-        
+        int bt = PlayerInventory.instance.battle;
+        for(int i = 0 ; i < 4; i++)
+        {
+            this.transform.GetChild(i).gameObject.SetActive( bt == i );
+        }
     }
 
     // Update is called once per frame

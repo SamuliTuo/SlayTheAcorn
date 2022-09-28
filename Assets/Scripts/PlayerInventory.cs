@@ -19,7 +19,7 @@ public class PlayerInventory : MonoBehaviour
     public int battle = 0;
 
 
-    void Start()
+    void Awake()
     {
         if(PlayerInventory.instance) {
             Destroy(this.gameObject);

@@ -381,8 +381,8 @@ MonoBehaviour:
 
     to heal'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5b863d3d4ad6c6f49af5b69d333ba540, type: 2}
+  m_sharedMaterial: {fileID: -3149843078590955279, guid: 5b863d3d4ad6c6f49af5b69d333ba540, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -471,7 +471,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -3149843078590955279, guid: 5b863d3d4ad6c6f49af5b69d333ba540, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5771,15 +5771,15 @@ MonoBehaviour:
 
     Tap to continue'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5b863d3d4ad6c6f49af5b69d333ba540, type: 2}
+  m_sharedMaterial: {fileID: -3149843078590955279, guid: 5b863d3d4ad6c6f49af5b69d333ba540, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278231807
-  m_fontColor: {r: 1, g: 0.63447744, b: 0, a: 1}
+    rgba: 4287823870
+  m_fontColor: {r: 0.99607843, g: 1, b: 0.57254905, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5861,7 +5861,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -3149843078590955279, guid: 5b863d3d4ad6c6f49af5b69d333ba540, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7092,8 +7092,8 @@ MonoBehaviour:
 
     your adventures.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5b863d3d4ad6c6f49af5b69d333ba540, type: 2}
+  m_sharedMaterial: {fileID: -3149843078590955279, guid: 5b863d3d4ad6c6f49af5b69d333ba540, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7182,7 +7182,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -3149843078590955279, guid: 5b863d3d4ad6c6f49af5b69d333ba540, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14903,6 +14903,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2067846352}
   - component: {fileID: 2067846353}
+  - component: {fileID: 2067846354}
   m_Layer: 0
   m_Name: enemies
   m_TagString: Untagged
@@ -14942,6 +14943,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   relativeSpeed: 1
+--- !u!114 &2067846354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067846351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa558432a1aedae40bd6e62042e14620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2111201718
 GameObject:
   m_ObjectHideFlags: 0
