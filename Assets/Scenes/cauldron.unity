@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 78598342}
   m_Layer: 0
   m_Name: input2
-  m_TagString: Untagged
+  m_TagString: CauldronIngredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -332,6 +332,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7469bdd823f52947842a2276d60fd4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  current: 0
+  ingredientHogweed: {fileID: 2100000, guid: e12a89a12de9f5e4db4eb914d148a2a5, type: 2}
+  ingredientLily: {fileID: 2100000, guid: f6664eb072a2b8f4b872a178ae21f933, type: 2}
+  ingredientFoxGlove: {fileID: 2100000, guid: b581f5fb6dc122047a726566fadbf28b, type: 2}
 --- !u!1 &82737384
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,7 +936,7 @@ Transform:
   m_GameObject: {fileID: 630614254}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.06, y: 1.7, z: -0.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.0518, y: 2.0518, z: 2.0518}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1670216832}
@@ -1585,7 +1589,7 @@ GameObject:
   - component: {fileID: 1462864863}
   m_Layer: 0
   m_Name: input1
-  m_TagString: Untagged
+  m_TagString: CauldronIngredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1681,6 +1685,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7469bdd823f52947842a2276d60fd4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  current: 0
+  ingredientHogweed: {fileID: 2100000, guid: e12a89a12de9f5e4db4eb914d148a2a5, type: 2}
+  ingredientLily: {fileID: 2100000, guid: f6664eb072a2b8f4b872a178ae21f933, type: 2}
+  ingredientFoxGlove: {fileID: 2100000, guid: b581f5fb6dc122047a726566fadbf28b, type: 2}
 --- !u!1 &1475004833
 GameObject:
   m_ObjectHideFlags: 0
