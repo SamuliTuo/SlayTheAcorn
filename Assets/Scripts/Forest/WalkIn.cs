@@ -123,7 +123,6 @@ public class WalkIn : MonoBehaviour
                 this.transform.localPosition.y,
                 this.transform.localPosition.z
             );
-            if(this.outPhase >=2f) PlayerInventory.instance.moveToBattle();
             //this.bgC.speed = this.startBGCurve.Evaluate(1f-this.stopPhase);
         }
         else{
@@ -134,6 +133,10 @@ public class WalkIn : MonoBehaviour
             this.lastFrame = Time.time;
             this.current = (this.current+1)%this.frames.Length;
             this.sqrRend.material = this.frames[this.current];
+            
+            if(this.current == 3){
+                FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/Character/Footstep", gameObject);
+            }
         }
         else if(!updateFrame) {
             this.current = 0;
