@@ -156,6 +156,11 @@ public class PlayerInventory : MonoBehaviour
         return false;
     }
 
+    public void ResetHp()
+    {
+        playerHP = maxHp;
+    }
+
 
 
 

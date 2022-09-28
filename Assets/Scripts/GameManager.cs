@@ -180,6 +180,7 @@ public class GameManager : MonoBehaviour
     void BattleStart()
     {
         EnemyScriptable enemy;
+        print(plrInventory.battle);
         switch (plrInventory.battle)
         {
             case 0:
@@ -354,11 +355,13 @@ public class GameManager : MonoBehaviour
     public void GoBackHomeToBrewPotions()
     {
         plrInventory.battle = 0;
+        plrInventory.ResetHp();
         plrInventory.moveToAlchemy();
     }
     public void GoToMainScreen()
     {
         plrInventory.battle = 0;
+        plrInventory.ResetHp();
         plrInventory.moveToMainScreen();
     }
 }
