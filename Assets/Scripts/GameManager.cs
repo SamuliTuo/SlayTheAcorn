@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public enum Turn { PLAYERTURN, ENEMYTURN }
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private PlayerInventory plrInventory = null;
+    private PlayerInventory plrInventory;
     [SerializeField] private Sprite emptyBottleImage = null;
+    [SerializeField] private int rerollPotionsAcornCost = 5;
 
     GameObject canvas;
     public bool PlayerAlive { get; set; }
@@ -52,7 +53,9 @@ public class GameManager : MonoBehaviour
         canvas_acornButton = canvas.transform.Find("acornShoot").GetComponent<Image>();
         canvas_player = canvas.transform.Find("Player").GetComponent<Image>();
         enemyObject = canvas.transform.Find("Enemy").gameObject;
+        print(enemyObject.name);
         canvas_enemy = enemyObject.GetComponent<Image>();
+        plrInventory = PlayerInventory.instance;
         if (battleCoroutine == null)
         {
             StartCoroutine(BattlePhase());
@@ -69,29 +72,25 @@ public class GameManager : MonoBehaviour
             if (currentTurn == Turn.PLAYERTURN)
             {
                 if (PlayerInventory.instance.ApplyTurnEffects() == true)
-                {
                     PlayerAlive = false;
-                }
-                if (chosenPotion == null)
-                {
-                    yield return null;
-                }
-                else
-                {
-                    if (enemyObject.GetComponent<EnemyController>().ReceivePotionAttackAndCheckIfDead(chosenPotion) == true)
-                    {
-                        enemyObject.GetComponent<EnemyController>().ResetEnemy();
-                        enemyAlive = false;
-                    }
-                    chosenPotion = potionSlot_01 = potionSlot_02 = potionSlot_03 = null;
-                    TogglePlayerButtons(false);
-                    yield return new WaitForSeconds(1);
-                    EnemyTurnStart();
-                    print("enemy turn");
-                    yield return null;
-                }
 
+                while (chosenPotion == null)
+                    yield return null;
+
+
+                if (enemyObject.GetComponent<EnemyController>().ReceivePotionAttackAndCheckIfDead(chosenPotion) == true)
+                {
+                    enemyObject.GetComponent<EnemyController>().ResetEnemy();
+                    enemyAlive = false;
+                }
+                chosenPotion = potionSlot_01 = potionSlot_02 = potionSlot_03 = null;
+                TogglePlayerButtons(false);
+                yield return new WaitForSeconds(1);
+                EnemyTurnStart();
+                print("enemy turn");
+                yield return null;
             }
+
             else if (currentTurn == Turn.ENEMYTURN)
             {
                 if (enemyObject.GetComponent<EnemyController>().ApplyTurnEffects() == true)
@@ -108,7 +107,6 @@ public class GameManager : MonoBehaviour
                     {
                         PlayerTurnStart();
                         print("player turn");
-
                     }
                     yield return null;
                 }
@@ -184,6 +182,11 @@ public class GameManager : MonoBehaviour
     }
     public void RerollPotions()
     {
+        if (plrInventory.acornCount < rerollPotionsAcornCost)
+            return;
+
+        plrInventory.AddAcorns(-rerollPotionsAcornCost);
+
         if (potionSlot_01 != null)
         {
             plrInventory.AddPotion(potionSlot_01);
@@ -197,6 +200,8 @@ public class GameManager : MonoBehaviour
             plrInventory.AddPotion(potionSlot_03);
         }
         potionSlot_01 = potionSlot_02 = potionSlot_03 = null;
+
+        FillPotionSlots();
     }
 
     void TogglePlayerButtons(bool state)

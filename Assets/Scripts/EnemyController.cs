@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum StatusEffect { NONE, DOT, CONFUSION, HALLUSINATION }
+public enum StatusEffect { NONE, DOT, PARALYSIS, HALLUSINATION, SHIELD }
 public class EnemyController : MonoBehaviour
 {
     private GameManager game;
@@ -46,18 +46,20 @@ public class EnemyController : MonoBehaviour
 
     public void ChooseAttack()
     {
-        float randomizedAttack = enemy.normalAtt_chance + enemy.status1_chance + enemy.status2_chance + enemy.status3_chance + enemy.dot_chance
+        float rand = 
+            enemy.normalAtt_chance + enemy.status1_chance + enemy.status2_chance + enemy.status3_chance + enemy.dot_chance
             * Random.Range(0.00f, 1.00f);
-        if (randomizedAttack > enemy.normalAtt_chance)
+
+        if (rand > enemy.normalAtt_chance)
         {
-            if (PlayerInventory.instance.AddHpAndCheckIfDead(Random.Range(enemy.normalAttackDamageRange.x, enemy.normalAttackDamageRange.y)))
+            if (PlayerInventory.instance.AddHpAndCheckIfDead(-Random.Range(enemy.normalAttackDamageRange.x, enemy.normalAttackDamageRange.y)))
                 game.PlayerAlive = true;
         }
-        else if (randomizedAttack > enemy.normalAtt_chance + enemy.status1_chance)
+        else if (rand > enemy.normalAtt_chance + enemy.status1_chance)
             PlayerInventory.instance.AddStatusEffect(enemy.statusEffect1, enemy.status1_durationInTurns);
-        else if (randomizedAttack > enemy.normalAtt_chance + enemy.status1_chance + enemy.status2_chance)
+        else if (rand > enemy.normalAtt_chance + enemy.status1_chance + enemy.status2_chance)
             PlayerInventory.instance.AddStatusEffect(enemy.statusEffect2, enemy.status2_durationInTurns);
-        else if (randomizedAttack > enemy.normalAtt_chance + enemy.status1_chance + enemy.status2_chance + enemy.status3_chance)
+        else if (rand > enemy.normalAtt_chance + enemy.status1_chance + enemy.status2_chance + enemy.status3_chance)
             PlayerInventory.instance.AddStatusEffect(enemy.statusEffect1, enemy.status1_durationInTurns);
         else
             PlayerInventory.instance.AddStatusEffect(enemy.dot, enemy.dot_durationInTurns);
@@ -92,7 +94,7 @@ public class EnemyController : MonoBehaviour
 
     bool ApplyEffect(StatusEffect eff, int turnsLeft)
     {
-        if (eff == StatusEffect.CONFUSION)
+        if (eff == StatusEffect.PARALYSIS)
         {
             print("I am confusion");
         }
@@ -100,9 +102,13 @@ public class EnemyController : MonoBehaviour
         {
             print("I'm tripping off my balls here maaan");
         }
+        else if (eff == StatusEffect.SHIELD)
+        {
+            print("I got a shield yay!");
+        }
         else if (eff == StatusEffect.DOT)
         {
-            print("taking a dot but idk how much lmao");
+            print("taking a dot oh no!");
             if (AddHpAndCheckIfDead(turnsLeft))
             {
                 return true;

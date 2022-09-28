@@ -12,14 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfae217ddd1dbd645899597f213e7bfb, type: 3}
   m_Name: enemy_01
   m_EditorClassIdentifier: 
+  enemySprite: {fileID: 21300000, guid: b7e7251ecd0f379428e6f2fc809d697a, type: 3}
+  enemyHP: 10
   normalAttackDamageRange: {x: 5, y: 10}
   normalAtt_chance: 0.5
   statusEffect1: 2
   status1_chance: 0.1
+  status1_durationInTurns: 1
   statusEffect2: 3
   status2_chance: 0.1
+  status2_durationInTurns: 1
   statusEffect3: 3
   status3_chance: 0.1
+  status3_durationInTurns: 1
   dot: 1
   dot_damagePerTick: 0.5
   dot_chance: 0.2
+  dot_durationInTurns: 1

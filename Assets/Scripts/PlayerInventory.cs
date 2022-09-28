@@ -84,13 +84,17 @@ public class PlayerInventory : MonoBehaviour
 
     bool ApplyEffect(StatusEffect eff, int turnsLeft)
     {
-        if (eff == StatusEffect.CONFUSION)
+        if (eff == StatusEffect.PARALYSIS)
         {
             print("I am confusion");
         }
         else if (eff == StatusEffect.HALLUSINATION)
         {
             print("I'm tripping off my balls here maaan");
+        }
+        else if (eff == StatusEffect.SHIELD)
+        {
+            print("Got a shield nice! btw I'm the player");
         }
         else if (eff == StatusEffect.DOT)
         {
@@ -110,6 +114,7 @@ public class PlayerInventory : MonoBehaviour
     public bool AddHpAndCheckIfDead(float amount)
     {
         playerHP += amount;
+        print("player took damage! hp left: " + playerHP);
         if (playerHP <= 0)
         {
             playerHP = 0;
