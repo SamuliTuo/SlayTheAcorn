@@ -31,19 +31,26 @@ public class WalkIn : MonoBehaviour
     private float stopPhase = 0f;
     private float outPhase = 0f;
     
+    public Material[] frames;
+    private int current = 0;
+    private float lastFrame = 0f;
     
     /** 0=in, 1=start, 2=walking, 3=stop, 4=start from stop, 5=out */
     public WalkState state = 0;
     
+    private Material sqrlMaterial;
+    private Renderer sqrRend;
     // Start is called before the first frame update
     void Start()
     {
-        
+        this.sqrRend = this.GetComponentInChildren<Renderer>();
+        this.sqrlMaterial = this.GetComponentInChildren<Renderer>().material;
     }
 
     // Update is called once per frame
     void Update()
     {
+        bool updateFrame = false;
         // In
         if(this.state == WalkState.walkIn){
             this.inPhase += Time.deltaTime/this.timeToIn;
@@ -53,6 +60,7 @@ public class WalkIn : MonoBehaviour
                 this.transform.localPosition.y,
                 this.transform.localPosition.z
             );
+            updateFrame = this.inPhase < 1f;
             if(this.inPhase >=1f && (Input.GetMouseButtonDown(0) || (Input.touchCount>0 && Input.GetTouch(0).phase ==TouchPhase.Began)))
             {
                 this.state = WalkState.start;
@@ -63,6 +71,7 @@ public class WalkIn : MonoBehaviour
         }
         // Start walking from in
         if(this.state == WalkState.start){
+            updateFrame = true;
             this.startPhase += Time.deltaTime/this.startTime;
             this.startPhase = Mathf.Clamp(this.startPhase, 0f,1f);
             this.transform.localPosition = new Vector3(
@@ -85,12 +94,14 @@ public class WalkIn : MonoBehaviour
                 this.transform.localPosition.z
             );
             this.bgC.speed = this.startBGCurve.Evaluate(1f-this.stopPhase);
+            updateFrame = this.stopPhase < 1f;
         }
         else{
             this.stopPhase = 0f;
         }
         //Start walking from stop
         if(this.state == WalkState.startFromStop){
+            updateFrame = true;
             this.startFromStopPhase += Time.deltaTime/this.timeToOut;
             this.startFromStopPhase = Mathf.Clamp(this.startFromStopPhase, 0f,1f);
             this.transform.localPosition = new Vector3(
@@ -104,6 +115,7 @@ public class WalkIn : MonoBehaviour
             this.startFromStopPhase = 0f;
         }
         if(this.state == WalkState.walkOut){
+            updateFrame = true;
             this.outPhase += Time.deltaTime/this.timeToOut;
             this.outPhase = Mathf.Clamp(this.outPhase, 0f,1f);
             this.transform.localPosition = new Vector3(
@@ -115,6 +127,16 @@ public class WalkIn : MonoBehaviour
         }
         else{
             this.outPhase = 0f;
+        }
+        if(updateFrame && (Time.time - this.lastFrame) >= 0.085)
+        {
+            this.lastFrame = Time.time;
+            this.current = (this.current+1)%this.frames.Length;
+            this.sqrRend.material = this.frames[this.current];
+        }
+        else if(!updateFrame) {
+            this.current = 0;
+            this.sqrRend.material = this.frames[this.current];
         }
     }
 }

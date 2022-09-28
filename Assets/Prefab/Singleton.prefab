@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 897378784014282148}
   - component: {fileID: 6748361733802124692}
+  - component: {fileID: 7284640231867990091}
   m_Layer: 0
   m_Name: Singleton
   m_TagString: Untagged
@@ -50,3 +51,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bc7b9b2ae6e20ef49827fb1f54b2a1d3, type: 2}
   acornCount: 0
   playerHP: 50
+  isHallusinating: 0
+  stunned: 0
+--- !u!114 &7284640231867990091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973873156392648942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42a5531e5d5fab14d9dad5f0c1185880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -10,6 +10,8 @@ public class EnemyController : MonoBehaviour
     private Dictionary<StatusEffect, int> currentStatuses = new Dictionary<StatusEffect, int>();
     private float hp;
     bool isHallusinating = false;
+    bool hasShield = false;
+    public bool stunned = false;
 
 
     public void ResetEnemy() { enemy = null; }
@@ -36,7 +38,10 @@ public class EnemyController : MonoBehaviour
     }
     bool AddHpAndCheckIfDead(float amount)
     {
-        hp -= amount;
+        if (!hasShield)
+        {
+            hp -= amount;
+        }
         print("Enemy hp left: " + hp);
         if (hp <= 0)
         {
@@ -93,6 +98,14 @@ public class EnemyController : MonoBehaviour
                     {
                         isHallusinating = false;
                     }
+                    if (status.Key == StatusEffect.SHIELD)
+                    {
+                        hasShield = false;
+                    }
+                    if (status.Key == StatusEffect.PARALYSIS)
+                    {
+                        stunned = false;
+                    }
                 }
             }
             currentStatuses.Clear();
@@ -109,7 +122,7 @@ public class EnemyController : MonoBehaviour
     {
         if (eff == StatusEffect.PARALYSIS)
         {
-            print("I am confusion");
+            stunned = true;
         }
         else if (eff == StatusEffect.HALLUSINATION)
         {
@@ -117,7 +130,7 @@ public class EnemyController : MonoBehaviour
         }
         else if (eff == StatusEffect.SHIELD)
         {
-            print("I got a shield yay!");
+            hasShield = true;
         }
         else if (eff == StatusEffect.DOT)
         {

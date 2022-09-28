@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerInventory : MonoBehaviour
 {
-    
     public static PlayerInventory instance;
     
     public List<Potion> playerPotions = new List<Potion>();
@@ -13,8 +13,12 @@ public class PlayerInventory : MonoBehaviour
     private Dictionary<StatusEffect, int> currentStatuses = new Dictionary<StatusEffect, int>();
     [SerializeField] private float playerHP = 50;
     public bool isHallusinating = false;
+    bool hasShield = false;
+    public bool stunned = false;
 
-    
+    public int battle = 0;
+
+
     void Start()
     {
         if(PlayerInventory.instance) {
@@ -70,15 +74,13 @@ public class PlayerInventory : MonoBehaviour
                 }
 
                 if (status.Value > 1)
-                {
                     updatedEffects.Add(status.Key, status.Value - 1);
-                }
                 else
                 {
                     if (status.Key == StatusEffect.HALLUSINATION)
-                    {
                         isHallusinating = false;
-                    }
+                    if (status.Key == StatusEffect.SHIELD)
+                        hasShield = false;
                 }
             }
             currentStatuses.Clear();
@@ -95,7 +97,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (eff == StatusEffect.PARALYSIS)
         {
-            print("I am confusion");
+            stunned = true;
         }
         else if (eff == StatusEffect.HALLUSINATION)
         {
@@ -104,6 +106,7 @@ public class PlayerInventory : MonoBehaviour
         }
         else if (eff == StatusEffect.SHIELD)
         {
+            hasShield = true;
             print("Got a shield nice! btw I'm the player");
         }
         else if (eff == StatusEffect.DOT)
@@ -124,7 +127,11 @@ public class PlayerInventory : MonoBehaviour
 
     public bool AddHpAndCheckIfDead(float amount)
     {
-        playerHP += amount;
+        if (!hasShield)
+        {
+            playerHP += amount;
+        }
+        
         print("player took damage! hp left: " + playerHP);
         if (playerHP <= 0)
         {
@@ -132,5 +139,34 @@ public class PlayerInventory : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    //   S C E N E    M A N A G E R   \\
+
+    public void moveToForest()
+    {
+        SceneManager.LoadScene(1);
+    }
+    public void moveToBattle()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void moveToAlchemy()
+    {
+        SceneManager.LoadScene(2);
+    }
+    public void moveToHome()
+    {
+
     }
 }
