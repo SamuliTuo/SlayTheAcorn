@@ -189,8 +189,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 258569724}
-  - component: {fileID: 258569726}
-  - component: {fileID: 258569725}
+  - component: {fileID: 258569727}
+  - component: {fileID: 258569728}
   m_Layer: 0
   m_Name: FMOD
   m_TagString: Untagged
@@ -213,7 +213,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &258569725
+--- !u!114 &258569727
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,12 +222,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 258569722}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 150886dc24c1d9e489efbb8c072de0fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 71c1ff48c33cf5c4a89a6d74b74f45d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Bank: Main
   BankStrings: Main.strings
---- !u!114 &258569726
+--- !u!114 &258569728
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -236,27 +236,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 258569722}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a1337e71acf48c4facdde0551e49817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 1000409462
-      Data2: 1091279246
-      Data3: 97414550
-      Data4: -682215542
-    Path: event:/Test
-  Event: 
-  PlayEvent: 1
-  StopEvent: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
