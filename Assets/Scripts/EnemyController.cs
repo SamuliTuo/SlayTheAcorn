@@ -5,14 +5,18 @@ using UnityEngine;
 public enum StatusEffect { NONE, DOT, CONFUSION, HALLUSINATION }
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private EnemyScriptable enemy;
+    private EnemyScriptable enemy;
     private Dictionary<StatusEffect, int> currentStatuses = new Dictionary<StatusEffect, int>();
     private float hp = 100;
 
-    private void Start()
+
+    public void ResetEnemy() { enemy = null; }
+    public void SetEnemy(EnemyScriptable _enemy)
     {
-        print(enemy);
+        enemy = _enemy;
+        hp = _enemy.enemyHP;
     }
+    
     public bool ReceivePotionAttackAndCheckIfDead(Potion potion)
     {
         if (potion.statusEff != StatusEffect.NONE)
@@ -21,8 +25,12 @@ public class EnemyController : MonoBehaviour
         }
         
         hp -= potion.damage;
-        if (hp < 0)
+        print(hp);
+        if (hp <= 0)
+        {
+            hp = 0;
             return true;
+        }
         else
             return false;
     }
@@ -33,6 +41,7 @@ public class EnemyController : MonoBehaviour
             * Random.Range(0.00f, 1.00f);
         if (randomizedAttack > enemy.normalAtt_chance)
         {
+
             print("normal attack");
         }
         else if (randomizedAttack > enemy.normalAtt_chance + enemy.status1_chance)
@@ -51,9 +60,6 @@ public class EnemyController : MonoBehaviour
         {
             print("status3");
         }
-
-
-
     }
 
     public void ApplyTurnEffects()

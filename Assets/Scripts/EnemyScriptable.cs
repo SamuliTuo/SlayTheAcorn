@@ -5,8 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObjects/NewEnemy", order = 1)]
 public class EnemyScriptable : ScriptableObject
 {
-    [Header("Chance means how often will the enemy use: 0 = never, 1 = often")]
+    public float enemyHP = 10;
 
+    [Header("Chance means how often will the enemy use: 0 = never, 1 = often")]
     public Vector2 normalAttackDamageRange = new Vector2(5.0f, 10.0f);
     public float normalAtt_chance = 0.5f;
     public StatusEffect statusEffect1 = StatusEffect.NONE;

@@ -1005,6 +1005,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plrInventory: {fileID: 1428803596}
   emptyBottleImage: {fileID: 21300000, guid: a4a983e0c9d30cf448c4a08c622b9902, type: 3}
+  enemy_01: {fileID: 11400000, guid: 889998218ccaf9d40b13677558a4af24, type: 2}
+  enemy_02: {fileID: 11400000, guid: c059e3620aebc4ba3b2f7d74ff941e35, type: 2}
+  enemy_03: {fileID: 11400000, guid: 33d49eb7560a84537a61a2b679d82170, type: 2}
+  enemy_04: {fileID: 11400000, guid: 5cd8c10f49f354d9eb9531d41a43cfb2, type: 2}
+  enemy_05: {fileID: 0}
+  enemy_06: {fileID: 0}
+  enemy_07: {fileID: 0}
+  enemy_08: {fileID: 0}
+  enemy_09: {fileID: 0}
+  enemy_10: {fileID: 0}
 --- !u!4 &958721845
 Transform:
   m_ObjectHideFlags: 0
