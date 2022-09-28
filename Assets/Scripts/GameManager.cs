@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int rerollPotionsAcornCost = 5;
     [SerializeField] private GameObject flying_potion_slot = null;
     [SerializeField] private GameObject endOfBattleScreen = null;
+    [SerializeField] private GameObject playerDiedBattleEnd = null;
 
     GameObject canvas;
     public bool PlayerAlive { get; set; }
@@ -174,16 +175,19 @@ public class GameManager : MonoBehaviour
     }
     void BattleEnd()
     {
+        TogglePlayerButtons(false);
         if (!PlayerAlive)
         {
             plrInventory.battle = 0;
             playerObject.SetActive(false);
+            playerDiedBattleEnd.SetActive(true);
         }
-        if (!enemyAlive)
+        else if (!enemyAlive)
         {
             enemyObject.SetActive(false);
+            endOfBattleScreen.SetActive(true);
         }
-        endOfBattleScreen.SetActive(true);
+        
     }
 
     void EnemyTurnStart()
@@ -318,5 +322,10 @@ public class GameManager : MonoBehaviour
     {
         plrInventory.battle = 0;
         plrInventory.moveToAlchemy();
+    }
+    public void GoToMainScreen()
+    {
+        plrInventory.battle = 0;
+        plrInventory.moveToMainScreen();
     }
 }

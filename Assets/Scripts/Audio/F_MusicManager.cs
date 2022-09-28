@@ -27,7 +27,7 @@ public class F_MusicManager : MonoBehaviour
 
         CombatMusic = FMODUnity.RuntimeManager.CreateInstance("event:/MusicAmb/Combat Track");
 
-        //  WalkingMusic = FMODUnity.RuntimeManager.CreateInstance("");
+        WalkingMusic = FMODUnity.RuntimeManager.CreateInstance("event:/MusicAmb/Walking Track");
 
         //  BreweryMusic = FMODUnity.RuntimeManager.CreateInstance("");
     }
