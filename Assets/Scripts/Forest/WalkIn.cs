@@ -32,7 +32,11 @@ public class WalkIn : MonoBehaviour
     private float outPhase = 0f;
     
     public Material[] frames;
-    private int current = 0;
+    
+    public Material[] combat;
+    public bool runCombat;
+    
+    public int current = 0;
     private float lastFrame = 0f;
     
     /** 0=in, 1=start, 2=walking, 3=stop, 4=start from stop, 5=out */
@@ -128,19 +132,39 @@ public class WalkIn : MonoBehaviour
         else{
             this.outPhase = 0f;
         }
-        if(updateFrame && (Time.time - this.lastFrame) >= 0.085)
+        if(!runCombat)
         {
-            this.lastFrame = Time.time;
-            this.current = (this.current+1)%this.frames.Length;
-            this.sqrRend.material = this.frames[this.current];
-            
-            if(this.current == 3){
-                FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/Character/Footstep", gameObject);
+            if(updateFrame && (Time.time - this.lastFrame) >= 0.085)
+            {
+                this.lastFrame = Time.time;
+                this.current = (this.current+1)%this.frames.Length;
+                this.sqrRend.material = this.frames[this.current];
+                
+                if(this.current == 3){
+                    FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/Character/Footstep", gameObject);
+                }
+            }
+            else if(!updateFrame) {
+                this.current = 0;
+                this.sqrRend.material = this.frames[this.current];
+                
             }
         }
-        else if(!updateFrame) {
-            this.current = 0;
-            this.sqrRend.material = this.frames[this.current];
+        
+        //kombat
+        if(runCombat && this.current < this.combat.Length && (Time.time - this.lastFrame) >= 0.085)
+        {
+            this.lastFrame = Time.time;
+            this.current = (this.current+1);
+            if(this.current >= this.combat.Length) this.current = this.combat.Length-1;
+            this.sqrRend.material = this.combat[this.current];
+            
         }
+        else if(!updateFrame) {
+            //this.current = 0;
+            //this.sqrRend.material = this.frames[this.current];
+        }
+        
+        
     }
 }
