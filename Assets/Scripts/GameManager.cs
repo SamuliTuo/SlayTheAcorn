@@ -355,11 +355,13 @@ public class GameManager : MonoBehaviour
     public void GoBackHomeToBrewPotions()
     {
         plrInventory.battle = 0;
+        plrInventory.ResetHp();
         plrInventory.moveToAlchemy();
     }
     public void GoToMainScreen()
     {
         plrInventory.battle = 0;
+        plrInventory.ResetHp();
         plrInventory.moveToMainScreen();
     }
 }
