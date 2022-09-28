@@ -20,7 +20,11 @@ public class Cauldron : MonoBehaviour
     
     public void startBrew()
     {
+
         this.result.animateIn = true;
+
+        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/UI/PotionCreate", gameObject);
+
     }
     
     public void brewingDone()
