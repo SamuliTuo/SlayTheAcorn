@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
     private EnemyScriptable enemy;
     private Dictionary<StatusEffect, int> currentStatuses = new Dictionary<StatusEffect, int>();
     private float hp;
+    bool isHallusinating = false;
 
 
     public void ResetEnemy() { enemy = null; }
@@ -19,13 +20,15 @@ public class EnemyController : MonoBehaviour
         hp = _enemy.enemyHP;
     }
     
-    public bool ReceivePotionAttackAndCheckIfDead(Potion potion)
+    public bool ReceivePotionAttackAndCheckIfDead(Potion potion, bool halluMultiplier)
     {
         if (potion.statusEff != StatusEffect.NONE)
         {
             currentStatuses.Add(potion.statusEff, potion.effectDurationInTurns);
         }
-        if (AddHpAndCheckIfDead(Random.Range(potion.damage.x, potion.damage.y)))
+        float dmg = Random.Range(potion.damage.x, potion.damage.y);
+        dmg = halluMultiplier ? dmg * 0.5f : dmg;
+        if (AddHpAndCheckIfDead(dmg))
         {
             return true;
         }
@@ -52,8 +55,10 @@ public class EnemyController : MonoBehaviour
 
         if (rand > enemy.normalAtt_chance)
         {
-            if (PlayerInventory.instance.AddHpAndCheckIfDead(-Random.Range(enemy.normalAttackDamageRange.x, enemy.normalAttackDamageRange.y)))
-                game.PlayerAlive = true;
+            float dmg = -Random.Range(enemy.normalAttackDamageRange.x, enemy.normalAttackDamageRange.y);
+            dmg = isHallusinating ? dmg * 0.5f : dmg;
+            if (PlayerInventory.instance.AddHpAndCheckIfDead(dmg))
+                game.PlayerAlive = false;
         }
         else if (rand > enemy.normalAtt_chance + enemy.status1_chance)
             PlayerInventory.instance.AddStatusEffect(enemy.statusEffect1, enemy.status1_durationInTurns);
@@ -77,9 +82,17 @@ public class EnemyController : MonoBehaviour
                     currentStatuses.Clear();
                     return true;
                 }
+
                 if (status.Value > 1)
                 {
                     updatedEffects.Add(status.Key, status.Value - 1);
+                }
+                else
+                {
+                    if (status.Key == StatusEffect.HALLUSINATION)
+                    {
+                        isHallusinating = false;
+                    }
                 }
             }
             currentStatuses.Clear();
@@ -100,7 +113,7 @@ public class EnemyController : MonoBehaviour
         }
         else if (eff == StatusEffect.HALLUSINATION)
         {
-            print("I'm tripping off my balls here maaan");
+            isHallusinating = true;
         }
         else if (eff == StatusEffect.SHIELD)
         {

@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Singleton
       objectReference: {fileID: 0}
+    - target: {fileID: 6748361733802124692, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
+      propertyPath: playerHP
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
 --- !u!1 &258569722
@@ -1061,6 +1065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyBottleImage: {fileID: 21300000, guid: a4a983e0c9d30cf448c4a08c622b9902, type: 3}
+  rerollPotionsAcornCost: 5
   enemy_01: {fileID: 11400000, guid: 889998218ccaf9d40b13677558a4af24, type: 2}
   enemy_02: {fileID: 11400000, guid: c059e3620aebc4ba3b2f7d74ff941e35, type: 2}
   enemy_03: {fileID: 11400000, guid: 33d49eb7560a84537a61a2b679d82170, type: 2}

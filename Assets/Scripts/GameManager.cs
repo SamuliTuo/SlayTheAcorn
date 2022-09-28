@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     Potion potionSlot_03;
     Potion chosenPotion = null;
 
+    private GameObject playerObject;
     private GameObject enemyObject;
 
     [SerializeField] private EnemyScriptable enemy_01;
@@ -51,7 +52,8 @@ public class GameManager : MonoBehaviour
         canvas_potionSlot03 = canvas.transform.Find("potionSlot_03").GetComponent<Image>();
         canvas_rerollButton = canvas.transform.Find("potions_reroll").GetComponent<Image>();
         canvas_acornButton = canvas.transform.Find("acornShoot").GetComponent<Image>();
-        canvas_player = canvas.transform.Find("Player").GetComponent<Image>();
+        playerObject = canvas.transform.Find("Player").gameObject;
+        canvas_player = playerObject.GetComponent<Image>();
         enemyObject = canvas.transform.Find("Enemy").gameObject;
         print(enemyObject.name);
         canvas_enemy = enemyObject.GetComponent<Image>();
@@ -78,7 +80,7 @@ public class GameManager : MonoBehaviour
                     yield return null;
 
 
-                if (enemyObject.GetComponent<EnemyController>().ReceivePotionAttackAndCheckIfDead(chosenPotion) == true)
+                if (enemyObject.GetComponent<EnemyController>().ReceivePotionAttackAndCheckIfDead(chosenPotion, plrInventory.isHallusinating) == true)
                 {
                     enemyObject.GetComponent<EnemyController>().ResetEnemy();
                     enemyAlive = false;
@@ -128,8 +130,14 @@ public class GameManager : MonoBehaviour
     }
     void BattleEnd()
     {
-        enemyObject.SetActive(false);
-        print("Combat ended, player or enemy died");
+        if (!PlayerAlive)
+        {
+            playerObject.SetActive(false);
+        }
+        if (!enemyAlive)
+        {
+            enemyObject.SetActive(false);
+        }
     }
 
     void EnemyTurnStart()

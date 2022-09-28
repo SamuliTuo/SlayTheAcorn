@@ -12,6 +12,7 @@ public class PlayerInventory : MonoBehaviour
 
     private Dictionary<StatusEffect, int> currentStatuses = new Dictionary<StatusEffect, int>();
     [SerializeField] private float playerHP = 50;
+    public bool isHallusinating = false;
 
     
     void Start()
@@ -67,9 +68,17 @@ public class PlayerInventory : MonoBehaviour
                     print("player died! oh no!");
                     return true;
                 }
+
                 if (status.Value > 1)
                 {
                     updatedEffects.Add(status.Key, status.Value - 1);
+                }
+                else
+                {
+                    if (status.Key == StatusEffect.HALLUSINATION)
+                    {
+                        isHallusinating = false;
+                    }
                 }
             }
             currentStatuses.Clear();
@@ -90,6 +99,7 @@ public class PlayerInventory : MonoBehaviour
         }
         else if (eff == StatusEffect.HALLUSINATION)
         {
+            isHallusinating = true;
             print("I'm tripping off my balls here maaan");
         }
         else if (eff == StatusEffect.SHIELD)
@@ -106,6 +116,7 @@ public class PlayerInventory : MonoBehaviour
         }
         return false;
     }
+
     public void AddStatusEffect(StatusEffect effect, int turns)
     {
         currentStatuses.Add(effect, turns);
