@@ -5,15 +5,17 @@ using UnityEngine;
 public enum StatusEffect { NONE, DOT, CONFUSION, HALLUSINATION }
 public class EnemyController : MonoBehaviour
 {
+    private GameManager game;
     private EnemyScriptable enemy;
     private Dictionary<StatusEffect, int> currentStatuses = new Dictionary<StatusEffect, int>();
-    private float hp = 100;
+    private float hp;
 
 
     public void ResetEnemy() { enemy = null; }
-    public void SetEnemy(EnemyScriptable _enemy)
+    public void SetEnemy(EnemyScriptable _enemy, GameManager _game)
     {
         enemy = _enemy;
+        game = _game;
         hp = _enemy.enemyHP;
     }
     
@@ -23,9 +25,16 @@ public class EnemyController : MonoBehaviour
         {
             currentStatuses.Add(potion.statusEff, potion.effectDurationInTurns);
         }
-        
-        hp -= potion.damage;
-        print(hp);
+        if (AddHpAndCheckIfDead(potion.damage))
+        {
+            return true;
+        }
+        return false;
+    }
+    bool AddHpAndCheckIfDead(float amount)
+    {
+        hp -= amount;
+        print("Enemy hp left: " + hp);
         if (hp <= 0)
         {
             hp = 0;
@@ -41,35 +50,31 @@ public class EnemyController : MonoBehaviour
             * Random.Range(0.00f, 1.00f);
         if (randomizedAttack > enemy.normalAtt_chance)
         {
-
-            print("normal attack");
+            if (PlayerInventory.instance.AddHpAndCheckIfDead(Random.Range(enemy.normalAttackDamageRange.x, enemy.normalAttackDamageRange.y)))
+                game.PlayerAlive = true;
         }
         else if (randomizedAttack > enemy.normalAtt_chance + enemy.status1_chance)
-        {
-            print("status1");
-        }
+            PlayerInventory.instance.AddStatusEffect(enemy.statusEffect1, enemy.status1_durationInTurns);
         else if (randomizedAttack > enemy.normalAtt_chance + enemy.status1_chance + enemy.status2_chance)
-        {
-            print("status2");
-        }
+            PlayerInventory.instance.AddStatusEffect(enemy.statusEffect2, enemy.status2_durationInTurns);
         else if (randomizedAttack > enemy.normalAtt_chance + enemy.status1_chance + enemy.status2_chance + enemy.status3_chance)
-        {
-            print("status3");
-        }
+            PlayerInventory.instance.AddStatusEffect(enemy.statusEffect1, enemy.status1_durationInTurns);
         else
-        {
-            print("status3");
-        }
+            PlayerInventory.instance.AddStatusEffect(enemy.dot, enemy.dot_durationInTurns);
     }
 
-    public void ApplyTurnEffects()
+    public bool ApplyTurnEffects()
     {
         if (currentStatuses.Count > 0)
         {
             Dictionary<StatusEffect, int> updatedEffects = new Dictionary<StatusEffect, int>();
             foreach (KeyValuePair<StatusEffect, int> status in currentStatuses)
             {
-                //apply effect
+                if (ApplyEffect(status.Key, status.Value))
+                {
+                    currentStatuses.Clear();
+                    return true;
+                }
                 if (status.Value > 1)
                 {
                     updatedEffects.Add(status.Key, status.Value - 1);
@@ -82,5 +87,27 @@ public class EnemyController : MonoBehaviour
                 currentStatuses = updatedEffects;
             }
         }
+        return false;
+    }
+
+    bool ApplyEffect(StatusEffect eff, int turnsLeft)
+    {
+        if (eff == StatusEffect.CONFUSION)
+        {
+            print("I am confusion");
+        }
+        else if (eff == StatusEffect.HALLUSINATION)
+        {
+            print("I'm tripping off my balls here maaan");
+        }
+        else if (eff == StatusEffect.DOT)
+        {
+            print("taking a dot but idk how much lmao");
+            if (AddHpAndCheckIfDead(turnsLeft))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

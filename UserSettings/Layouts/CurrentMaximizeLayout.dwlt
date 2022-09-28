@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 5414
+  controlID: 6360
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 5415
+  controlID: 6361
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 5416
+  controlID: 6362
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -492,9 +492,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 787.44995, y: 1047.9691, z: -9.727167}
+    m_Target: {x: 306.83542, y: 1168.8021, z: -12.342111}
     speed: 2
-    m_Value: {x: 787.44995, y: 1047.9691, z: -9.727167}
+    m_Value: {x: 306.83542, y: 1168.8021, z: -12.342111}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -545,9 +545,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 1197.9546
+    m_Target: 1221.7788
     speed: 2
-    m_Value: 1197.9546
+    m_Value: 1221.7788
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -619,8 +619,8 @@ MonoBehaviour:
     y: 560.8
     width: 1054.4
     height: 210
-  m_MinSize: {x: 230, y: 250}
-  m_MaxSize: {x: 10000, y: 10000}
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 11}
   m_Panes:
   - {fileID: 11}
@@ -668,21 +668,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/potions
+    - Assets/Resources/enemies
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Resources/potions
+  - Assets/Resources/enemies
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\_UNITY pelit\SquirrelGame
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 123}
-    m_SelectedIDs: 8e710000
-    m_LastClickedID: 29070
+    m_SelectedIDs: 8c710000
+    m_LastClickedID: 29068
     m_ExpandedIDs: 00000000c86e000082710000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

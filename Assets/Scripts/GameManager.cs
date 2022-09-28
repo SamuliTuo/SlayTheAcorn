@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite emptyBottleImage = null;
 
     GameObject canvas;
-    bool playerAlive;
+    public bool PlayerAlive { get; set; }
     bool enemyAlive;
     Coroutine battleCoroutine = null;
 
@@ -64,10 +64,14 @@ public class GameManager : MonoBehaviour
         BattleStart(enemy_01);
 
         yield return null;
-        while (playerAlive && enemyAlive)
+        while (PlayerAlive && enemyAlive)
         {
             if (currentTurn == Turn.PLAYERTURN)
             {
+                if (PlayerInventory.instance.ApplyTurnEffects() == true)
+                {
+                    PlayerAlive = false;
+                }
                 if (chosenPotion == null)
                 {
                     yield return null;
@@ -90,26 +94,36 @@ public class GameManager : MonoBehaviour
             }
             else if (currentTurn == Turn.ENEMYTURN)
             {
-                enemyObject.GetComponent<EnemyController>().ApplyTurnEffects();
-                yield return new WaitForSeconds(1);
-                enemyObject.GetComponent<EnemyController>().ChooseAttack();
-                yield return new WaitForSeconds(0.5f);
-                PlayerTurnStart();
-                print("player turn");
-                yield return null;
+                if (enemyObject.GetComponent<EnemyController>().ApplyTurnEffects() == true)
+                {
+                    enemyAlive = false;
+                    yield return new WaitForSeconds(1);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(1);
+                    enemyObject.GetComponent<EnemyController>().ChooseAttack();
+                    yield return new WaitForSeconds(0.5f);
+                    if (PlayerAlive)
+                    {
+                        PlayerTurnStart();
+                        print("player turn");
+
+                    }
+                    yield return null;
+                }
+
             }
         }
         BattleEnd();
-        
     }
     
-
 
     void BattleStart(EnemyScriptable enemy)
     {
         chosenPotion = null;
-        enemyObject.GetComponent<EnemyController>().SetEnemy(enemy);
-        playerAlive = true;
+        enemyObject.GetComponent<EnemyController>().SetEnemy(enemy, this);
+        PlayerAlive = true;
         enemyAlive = true;
         PlayerTurnStart();
     }

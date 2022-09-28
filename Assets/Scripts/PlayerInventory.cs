@@ -10,6 +10,7 @@ public class PlayerInventory : MonoBehaviour
     public List<Potion> playerPotions = new List<Potion>();
     public int acornCount = 0;
 
+    private Dictionary<StatusEffect, int> currentStatuses = new Dictionary<StatusEffect, int>();
     [SerializeField] private float playerHP = 50;
 
     
@@ -51,6 +52,59 @@ public class PlayerInventory : MonoBehaviour
             return pot;
         }
         else return null;
+    }
+
+    // Getting damaged
+    public bool ApplyTurnEffects()
+    {
+        if (currentStatuses.Count > 0)
+        {
+            Dictionary<StatusEffect, int> updatedEffects = new Dictionary<StatusEffect, int>();
+            foreach (KeyValuePair<StatusEffect, int> status in currentStatuses)
+            {
+                if (ApplyEffect(status.Key, status.Value) == true)
+                {
+                    print("player died! oh no!");
+                    return true;
+                }
+                if (status.Value > 1)
+                {
+                    updatedEffects.Add(status.Key, status.Value - 1);
+                }
+            }
+            currentStatuses.Clear();
+
+            if (updatedEffects.Count > 0)
+            {
+                currentStatuses = updatedEffects;
+            }
+        }
+        return false;
+    }
+
+    bool ApplyEffect(StatusEffect eff, int turnsLeft)
+    {
+        if (eff == StatusEffect.CONFUSION)
+        {
+            print("I am confusion");
+        }
+        else if (eff == StatusEffect.HALLUSINATION)
+        {
+            print("I'm tripping off my balls here maaan");
+        }
+        else if (eff == StatusEffect.DOT)
+        {
+            print("taking a dot but idk how much lmao");
+            if (AddHpAndCheckIfDead(turnsLeft))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void AddStatusEffect(StatusEffect effect, int turns)
+    {
+        currentStatuses.Add(effect, turns);
     }
 
     public bool AddHpAndCheckIfDead(float amount)
