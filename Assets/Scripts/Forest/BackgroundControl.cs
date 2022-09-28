@@ -27,9 +27,9 @@ public class BackgroundControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.walked += this.speed * Time.deltaTime;
+        this.walked += this.speed * Time.deltaTime*2f;
         bgs.ForEach( bg => {
-            bg.Move(this.speed * Time.deltaTime);
+            bg.Move(this.speed * Time.deltaTime*2f);
         });
         
         
