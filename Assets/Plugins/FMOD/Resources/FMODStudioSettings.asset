@@ -307,7 +307,7 @@ MonoBehaviour:
   RealChannelSettings: []
   Plugins: []
   MasterBanks:
-  - FMODBanks/Desktop/Main
+  - Main
   Banks: []
   BanksToLoad: []
   LiveUpdatePort: 9264
