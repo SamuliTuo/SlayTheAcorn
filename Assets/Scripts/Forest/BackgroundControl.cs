@@ -38,6 +38,7 @@ public class BackgroundControl : MonoBehaviour
             this.stopped = true;
             this.current++;
             player.state = WalkIn.WalkState.stop;
+            if(this.current >= this.stopAt.Count ) Invoke("movetonext",1f);
         }
         if(!this.stopped && player.state == WalkIn.WalkState.stop)
         {
@@ -47,5 +48,11 @@ public class BackgroundControl : MonoBehaviour
             player.state = WalkIn.WalkState.walkOut;
         }
         
+    }
+    
+    void movetonext()
+    {
+         PlayerInventory.instance.moveToBattle();
+
     }
 }
