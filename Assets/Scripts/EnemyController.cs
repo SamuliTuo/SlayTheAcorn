@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum StatusEffect { NONE, DOT, CONFUSION, HALLUSINATION }
+public enum StatusEffect { NONE, DOT, PARALYSIS, HALLUSINATION, SHIELD }
 public class EnemyController : MonoBehaviour
 {
     private GameManager game;
     private EnemyScriptable enemy;
     private Dictionary<StatusEffect, int> currentStatuses = new Dictionary<StatusEffect, int>();
     private float hp;
+    bool isHallusinating = false;
+    bool hasShield = false;
+    public bool stunned = false;
 
 
     public void ResetEnemy() { enemy = null; }
@@ -19,13 +22,15 @@ public class EnemyController : MonoBehaviour
         hp = _enemy.enemyHP;
     }
     
-    public bool ReceivePotionAttackAndCheckIfDead(Potion potion)
+    public bool ReceivePotionAttackAndCheckIfDead(Potion potion, bool halluMultiplier)
     {
         if (potion.statusEff != StatusEffect.NONE)
         {
             currentStatuses.Add(potion.statusEff, potion.effectDurationInTurns);
         }
-        if (AddHpAndCheckIfDead(Random.Range(potion.damage.x, potion.damage.y)))
+        float dmg = Random.Range(potion.damage.x, potion.damage.y);
+        dmg = halluMultiplier ? dmg * 0.5f : dmg;
+        if (AddHpAndCheckIfDead(dmg))
         {
             return true;
         }
@@ -33,7 +38,10 @@ public class EnemyController : MonoBehaviour
     }
     bool AddHpAndCheckIfDead(float amount)
     {
-        hp -= amount;
+        if (!hasShield)
+        {
+            hp -= amount;
+        }
         print("Enemy hp left: " + hp);
         if (hp <= 0)
         {
@@ -46,18 +54,22 @@ public class EnemyController : MonoBehaviour
 
     public void ChooseAttack()
     {
-        float randomizedAttack = enemy.normalAtt_chance + enemy.status1_chance + enemy.status2_chance + enemy.status3_chance + enemy.dot_chance
+        float rand = 
+            enemy.normalAtt_chance + enemy.status1_chance + enemy.status2_chance + enemy.status3_chance + enemy.dot_chance
             * Random.Range(0.00f, 1.00f);
-        if (randomizedAttack > enemy.normalAtt_chance)
+
+        if (rand > enemy.normalAtt_chance)
         {
-            if (PlayerInventory.instance.AddHpAndCheckIfDead(Random.Range(enemy.normalAttackDamageRange.x, enemy.normalAttackDamageRange.y)))
-                game.PlayerAlive = true;
+            float dmg = -Random.Range(enemy.normalAttackDamageRange.x, enemy.normalAttackDamageRange.y);
+            dmg = isHallusinating ? dmg * 0.5f : dmg;
+            if (PlayerInventory.instance.AddHpAndCheckIfDead(dmg))
+                game.PlayerAlive = false;
         }
-        else if (randomizedAttack > enemy.normalAtt_chance + enemy.status1_chance)
+        else if (rand > enemy.normalAtt_chance + enemy.status1_chance)
             PlayerInventory.instance.AddStatusEffect(enemy.statusEffect1, enemy.status1_durationInTurns);
-        else if (randomizedAttack > enemy.normalAtt_chance + enemy.status1_chance + enemy.status2_chance)
+        else if (rand > enemy.normalAtt_chance + enemy.status1_chance + enemy.status2_chance)
             PlayerInventory.instance.AddStatusEffect(enemy.statusEffect2, enemy.status2_durationInTurns);
-        else if (randomizedAttack > enemy.normalAtt_chance + enemy.status1_chance + enemy.status2_chance + enemy.status3_chance)
+        else if (rand > enemy.normalAtt_chance + enemy.status1_chance + enemy.status2_chance + enemy.status3_chance)
             PlayerInventory.instance.AddStatusEffect(enemy.statusEffect1, enemy.status1_durationInTurns);
         else
             PlayerInventory.instance.AddStatusEffect(enemy.dot, enemy.dot_durationInTurns);
@@ -75,9 +87,25 @@ public class EnemyController : MonoBehaviour
                     currentStatuses.Clear();
                     return true;
                 }
+
                 if (status.Value > 1)
                 {
                     updatedEffects.Add(status.Key, status.Value - 1);
+                }
+                else
+                {
+                    if (status.Key == StatusEffect.HALLUSINATION)
+                    {
+                        isHallusinating = false;
+                    }
+                    if (status.Key == StatusEffect.SHIELD)
+                    {
+                        hasShield = false;
+                    }
+                    if (status.Key == StatusEffect.PARALYSIS)
+                    {
+                        stunned = false;
+                    }
                 }
             }
             currentStatuses.Clear();
@@ -92,17 +120,21 @@ public class EnemyController : MonoBehaviour
 
     bool ApplyEffect(StatusEffect eff, int turnsLeft)
     {
-        if (eff == StatusEffect.CONFUSION)
+        if (eff == StatusEffect.PARALYSIS)
         {
-            print("I am confusion");
+            stunned = true;
         }
         else if (eff == StatusEffect.HALLUSINATION)
         {
-            print("I'm tripping off my balls here maaan");
+            isHallusinating = true;
+        }
+        else if (eff == StatusEffect.SHIELD)
+        {
+            hasShield = true;
         }
         else if (eff == StatusEffect.DOT)
         {
-            print("taking a dot but idk how much lmao");
+            print("taking a dot oh no!");
             if (AddHpAndCheckIfDead(turnsLeft))
             {
                 return true;

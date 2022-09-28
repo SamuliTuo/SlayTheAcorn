@@ -12,8 +12,12 @@ public class PlayerInventory : MonoBehaviour
 
     private Dictionary<StatusEffect, int> currentStatuses = new Dictionary<StatusEffect, int>();
     [SerializeField] private float playerHP = 50;
+    public bool isHallusinating = false;
+    bool hasShield = false;
+    public bool stunned = false;
 
-    
+
+
     void Start()
     {
         if(PlayerInventory.instance) {
@@ -67,9 +71,15 @@ public class PlayerInventory : MonoBehaviour
                     print("player died! oh no!");
                     return true;
                 }
+
                 if (status.Value > 1)
-                {
                     updatedEffects.Add(status.Key, status.Value - 1);
+                else
+                {
+                    if (status.Key == StatusEffect.HALLUSINATION)
+                        isHallusinating = false;
+                    if (status.Key == StatusEffect.SHIELD)
+                        hasShield = false;
                 }
             }
             currentStatuses.Clear();
@@ -84,13 +94,19 @@ public class PlayerInventory : MonoBehaviour
 
     bool ApplyEffect(StatusEffect eff, int turnsLeft)
     {
-        if (eff == StatusEffect.CONFUSION)
+        if (eff == StatusEffect.PARALYSIS)
         {
-            print("I am confusion");
+            stunned = true;
         }
         else if (eff == StatusEffect.HALLUSINATION)
         {
+            isHallusinating = true;
             print("I'm tripping off my balls here maaan");
+        }
+        else if (eff == StatusEffect.SHIELD)
+        {
+            hasShield = true;
+            print("Got a shield nice! btw I'm the player");
         }
         else if (eff == StatusEffect.DOT)
         {
@@ -102,6 +118,7 @@ public class PlayerInventory : MonoBehaviour
         }
         return false;
     }
+
     public void AddStatusEffect(StatusEffect effect, int turns)
     {
         currentStatuses.Add(effect, turns);
@@ -109,7 +126,12 @@ public class PlayerInventory : MonoBehaviour
 
     public bool AddHpAndCheckIfDead(float amount)
     {
-        playerHP += amount;
+        if (!hasShield)
+        {
+            playerHP += amount;
+        }
+        
+        print("player took damage! hp left: " + playerHP);
         if (playerHP <= 0)
         {
             playerHP = 0;
