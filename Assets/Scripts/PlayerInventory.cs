@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerInventory : MonoBehaviour
 {
-    
     public static PlayerInventory instance;
     
     public List<Potion> playerPotions = new List<Potion>();
@@ -16,6 +16,7 @@ public class PlayerInventory : MonoBehaviour
     bool hasShield = false;
     public bool stunned = false;
 
+    public int battle = 0;
 
 
     void Start()
@@ -138,5 +139,34 @@ public class PlayerInventory : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    //   S C E N E    M A N A G E R   \\
+
+    public void moveToForest()
+    {
+        SceneManager.LoadScene(1);
+    }
+    public void moveToBattle()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void moveToAlchemy()
+    {
+        SceneManager.LoadScene(2);
+    }
+    public void moveToHome()
+    {
+
     }
 }

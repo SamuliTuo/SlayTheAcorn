@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite emptyBottleImage = null;
     [SerializeField] private int rerollPotionsAcornCost = 5;
     [SerializeField] private GameObject flying_potion_slot = null;
+    [SerializeField] private GameObject endOfBattleScreen = null;
 
     GameObject canvas;
     public bool PlayerAlive { get; set; }
@@ -68,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator BattlePhase()
     {
-        BattleStart(enemy_01);
+        BattleStart();
 
         yield return null;
         while (PlayerAlive && enemyAlive)
@@ -142,8 +143,28 @@ public class GameManager : MonoBehaviour
         }
         flying_potion_slot.SetActive(false);
     }
-    void BattleStart(EnemyScriptable enemy)
+    void BattleStart()
     {
+        EnemyScriptable enemy;
+        switch (plrInventory.battle)
+        {
+            case 0:
+                enemy = enemy_01;
+                break;
+            case 1:
+                enemy = enemy_02;
+                break;
+            case 2:
+                enemy = enemy_03;
+                break;
+            case 3:
+                enemy = enemy_04;
+                break;
+            default:
+                enemy = enemy_01;
+                break;
+        }
+
         chosenPotion = null;
         enemyObject.GetComponent<EnemyController>().SetEnemy(enemy, this);
         canvas_enemy.sprite = enemy.enemySprite;
@@ -155,12 +176,14 @@ public class GameManager : MonoBehaviour
     {
         if (!PlayerAlive)
         {
+            plrInventory.battle = 0;
             playerObject.SetActive(false);
         }
         if (!enemyAlive)
         {
             enemyObject.SetActive(false);
         }
+        endOfBattleScreen.SetActive(true);
     }
 
     void EnemyTurnStart()
@@ -284,5 +307,16 @@ public class GameManager : MonoBehaviour
         {
             canvas_potionSlot03.sprite = emptyBottleImage;
         }
+    }
+
+    public void ContinueAdventure()
+    {
+        plrInventory.battle++;
+        plrInventory.moveToForest();
+    }
+    public void GoBackHomeToBrewPotions()
+    {
+        plrInventory.battle = 0;
+        plrInventory.moveToAlchemy();
     }
 }
