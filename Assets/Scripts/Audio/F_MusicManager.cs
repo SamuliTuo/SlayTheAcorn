@@ -32,7 +32,7 @@ public class F_MusicManager : MonoBehaviour
 
         WalkingMusic = FMODUnity.RuntimeManager.CreateInstance("event:/MusicAmb/Walking Track");
 
-        //  BreweryMusic = FMODUnity.RuntimeManager.CreateInstance("");
+        BreweryMusic = FMODUnity.RuntimeManager.CreateInstance("event:/MusicAmb/Brewing Track");
     }
 
     public void Start()
