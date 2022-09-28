@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class F_MusicManager : MonoBehaviour
 {
+
+    bool audioResumed = false;
+
     public string Bank;
 
     public string BankStrings;
@@ -30,6 +33,18 @@ public class F_MusicManager : MonoBehaviour
         WalkingMusic = FMODUnity.RuntimeManager.CreateInstance("event:/MusicAmb/Walking Track");
 
         //  BreweryMusic = FMODUnity.RuntimeManager.CreateInstance("");
+    }
+
+    public void Start()
+    {
+        if (!audioResumed)
+        {
+            var result = FMODUnity.RuntimeManager.CoreSystem.mixerSuspend();
+            //  Debug.Log(result);
+            result = FMODUnity.RuntimeManager.CoreSystem.mixerResume();
+            //  Debug.Log(result);
+            audioResumed = true;
+        }
     }
 
 
