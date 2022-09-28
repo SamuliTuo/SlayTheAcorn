@@ -27,9 +27,9 @@ public class BackgroundControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.walked += this.speed * Time.deltaTime;
+        this.walked += this.speed * Time.deltaTime*2f;
         bgs.ForEach( bg => {
-            bg.Move(this.speed * Time.deltaTime);
+            bg.Move(this.speed * Time.deltaTime*2f);
         });
         
         
@@ -38,6 +38,7 @@ public class BackgroundControl : MonoBehaviour
             this.stopped = true;
             this.current++;
             player.state = WalkIn.WalkState.stop;
+            if(this.current >= this.stopAt.Count ) Invoke("movetonext",1f);
         }
         if(!this.stopped && player.state == WalkIn.WalkState.stop)
         {
@@ -47,5 +48,11 @@ public class BackgroundControl : MonoBehaviour
             player.state = WalkIn.WalkState.walkOut;
         }
         
+    }
+    
+    void movetonext()
+    {
+         PlayerInventory.instance.moveToBattle();
+
     }
 }
