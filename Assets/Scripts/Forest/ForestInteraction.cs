@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ForestInteraction : MonoBehaviour
 {
+    public BackgroundControl unstopOnPickup;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +36,7 @@ public class ForestInteraction : MonoBehaviour
             {
                 hit.collider.gameObject.SetActive(false);
             }
-            
+            if(this.unstopOnPickup) this.unstopOnPickup.stopped = false;
         }
     }
 }
