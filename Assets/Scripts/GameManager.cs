@@ -10,8 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite emptyBottleImage = null;
 
     GameObject canvas;
-    GameObject currentEnemy;
-    bool playerAlive;
+    public bool PlayerAlive { get; set; }
     bool enemyAlive;
     Coroutine battleCoroutine = null;
 
@@ -22,32 +21,38 @@ public class GameManager : MonoBehaviour
     Image canvas_potionSlot03;
     Image canvas_rerollButton;
     Image canvas_acornButton;
+    Image canvas_enemy;
+    Image canvas_player;
     
     Potion potionSlot_01;
     Potion potionSlot_02;
     Potion potionSlot_03;
     Potion chosenPotion = null;
 
-    private GameObject enemy_01;
-    private GameObject enemy_02;
-    private GameObject enemy_03;
-    private GameObject enemy_04;
-    private GameObject enemy_05;
-    private GameObject enemy_06;
-    private GameObject enemy_07;
-    private GameObject enemy_08;
-    private GameObject enemy_09;
-    private GameObject enemy_10;
+    private GameObject enemyObject;
+
+    [SerializeField] private EnemyScriptable enemy_01;
+    [SerializeField] private EnemyScriptable enemy_02;
+    [SerializeField] private EnemyScriptable enemy_03;
+    [SerializeField] private EnemyScriptable enemy_04;
+    [SerializeField] private EnemyScriptable enemy_05;
+    [SerializeField] private EnemyScriptable enemy_06;
+    [SerializeField] private EnemyScriptable enemy_07;
+    [SerializeField] private EnemyScriptable enemy_08;
+    [SerializeField] private EnemyScriptable enemy_09;
+    [SerializeField] private EnemyScriptable enemy_10;
 
     void Start()
     {
         canvas = GameObject.Find("Canvas");
-        enemy_01 = Resources.Load("Enemy_01") as GameObject;
         canvas_potionSlot01 = canvas.transform.Find("potionSlot_01").GetComponent<Image>();
         canvas_potionSlot02 = canvas.transform.Find("potionSlot_02").GetComponent<Image>();
         canvas_potionSlot03 = canvas.transform.Find("potionSlot_03").GetComponent<Image>();
         canvas_rerollButton = canvas.transform.Find("potions_reroll").GetComponent<Image>();
         canvas_acornButton = canvas.transform.Find("acornShoot").GetComponent<Image>();
+        canvas_player = canvas.transform.Find("Player").GetComponent<Image>();
+        enemyObject = canvas.transform.Find("Enemy").gameObject;
+        canvas_enemy = enemyObject.GetComponent<Image>();
         if (battleCoroutine == null)
         {
             StartCoroutine(BattlePhase());
@@ -59,21 +64,29 @@ public class GameManager : MonoBehaviour
         BattleStart(enemy_01);
 
         yield return null;
-        while (playerAlive && enemyAlive)
+        while (PlayerAlive && enemyAlive)
         {
             if (currentTurn == Turn.PLAYERTURN)
             {
+                if (PlayerInventory.instance.ApplyTurnEffects() == true)
+                {
+                    PlayerAlive = false;
+                }
                 if (chosenPotion == null)
                 {
                     yield return null;
                 }
                 else
                 {
-                    currentEnemy.GetComponent<EnemyController>().ReceivePotionAttackAndCheckIfDead(chosenPotion);
+                    if (enemyObject.GetComponent<EnemyController>().ReceivePotionAttackAndCheckIfDead(chosenPotion) == true)
+                    {
+                        enemyObject.GetComponent<EnemyController>().ResetEnemy();
+                        enemyAlive = false;
+                    }
                     chosenPotion = potionSlot_01 = potionSlot_02 = potionSlot_03 = null;
                     TogglePlayerButtons(false);
                     yield return new WaitForSeconds(1);
-                    EnemyTurn();
+                    EnemyTurnStart();
                     print("enemy turn");
                     yield return null;
                 }
@@ -81,34 +94,51 @@ public class GameManager : MonoBehaviour
             }
             else if (currentTurn == Turn.ENEMYTURN)
             {
-                currentEnemy.GetComponent<EnemyController>().ApplyTurnEffects();
-                yield return new WaitForSeconds(1);
-                currentEnemy.GetComponent<EnemyController>().ChooseAttack();
-                yield return new WaitForSeconds(0.5f);
-                PlayerTurn();
-                print("player turn");
-                yield return null;
+                if (enemyObject.GetComponent<EnemyController>().ApplyTurnEffects() == true)
+                {
+                    enemyAlive = false;
+                    yield return new WaitForSeconds(1);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(1);
+                    enemyObject.GetComponent<EnemyController>().ChooseAttack();
+                    yield return new WaitForSeconds(0.5f);
+                    if (PlayerAlive)
+                    {
+                        PlayerTurnStart();
+                        print("player turn");
+
+                    }
+                    yield return null;
+                }
+
             }
         }
-        print("Combat ended, player or enemy died");
+        BattleEnd();
     }
     
 
-
-    void BattleStart(GameObject enemy)
+    void BattleStart(EnemyScriptable enemy)
     {
         chosenPotion = null;
-        currentEnemy = enemy;
-        playerAlive = true;
+        enemyObject.GetComponent<EnemyController>().SetEnemy(enemy, this);
+        canvas_enemy.sprite = enemy.enemySprite;
+        PlayerAlive = true;
         enemyAlive = true;
-        PlayerTurn();
+        PlayerTurnStart();
+    }
+    void BattleEnd()
+    {
+        enemyObject.SetActive(false);
+        print("Combat ended, player or enemy died");
     }
 
-    void EnemyTurn()
+    void EnemyTurnStart()
     {
         currentTurn = Turn.ENEMYTURN;
     }
-    void PlayerTurn()
+    void PlayerTurnStart()
     {
         currentTurn = Turn.PLAYERTURN;
         TogglePlayerButtons(true);

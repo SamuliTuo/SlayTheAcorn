@@ -123,6 +123,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &36973824
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 897378784014282148, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 897378784014282148, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 897378784014282148, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 640
+      objectReference: {fileID: 0}
+    - target: {fileID: 897378784014282148, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 897378784014282148, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 897378784014282148, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 897378784014282148, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 897378784014282148, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 897378784014282148, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 897378784014282148, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 897378784014282148, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1973873156392648942, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
+      propertyPath: m_Name
+      value: Singleton
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ad73c9cd2838ee8419b9816ff00e1d0b, type: 3}
 --- !u!1 &258569722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1005,6 +1062,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plrInventory: {fileID: 1428803596}
   emptyBottleImage: {fileID: 21300000, guid: a4a983e0c9d30cf448c4a08c622b9902, type: 3}
+  enemy_01: {fileID: 11400000, guid: 889998218ccaf9d40b13677558a4af24, type: 2}
+  enemy_02: {fileID: 11400000, guid: c059e3620aebc4ba3b2f7d74ff941e35, type: 2}
+  enemy_03: {fileID: 11400000, guid: 33d49eb7560a84537a61a2b679d82170, type: 2}
+  enemy_04: {fileID: 11400000, guid: 5cd8c10f49f354d9eb9531d41a43cfb2, type: 2}
+  enemy_05: {fileID: 0}
+  enemy_06: {fileID: 0}
+  enemy_07: {fileID: 0}
+  enemy_08: {fileID: 0}
+  enemy_09: {fileID: 0}
+  enemy_10: {fileID: 0}
 --- !u!4 &958721845
 Transform:
   m_ObjectHideFlags: 0
