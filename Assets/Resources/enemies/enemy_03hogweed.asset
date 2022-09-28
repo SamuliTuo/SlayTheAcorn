@@ -12,14 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfae217ddd1dbd645899597f213e7bfb, type: 3}
   m_Name: enemy_03hogweed
   m_EditorClassIdentifier: 
+  enemySprite: {fileID: 0}
+  enemyHP: 100
   normalAttackDamageRange: {x: 7, y: 9}
   normalAtt_chance: 0.5
   statusEffect1: 2
   status1_chance: 0.2
-  statusEffect2: 1
-  status2_chance: 0.2
+  status1_durationInTurns: 1
+  statusEffect2: 0
+  status2_chance: 0
+  status2_durationInTurns: 0
   statusEffect3: 0
   status3_chance: 0
+  status3_durationInTurns: 0
   dot: 1
-  dot_damagePerTick: 3
-  dot_chance: 0.8
+  dot_damagePerTick: 4
+  dot_chance: 0.2
+  dot_durationInTurns: 4
