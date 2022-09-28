@@ -34,6 +34,8 @@ public class ForestInteraction : MonoBehaviour
             } 
             if(hit.collider.tag == "Acorn")
             {
+                FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/UI/Collect ", gameObject);
+
                 hit.collider.gameObject.SetActive(false);
                 PlayerInventory.instance.AddAcorns( Mathf.FloorToInt( 50 +  Mathf.Floor(Random.value*10f)*10f) );
             }
