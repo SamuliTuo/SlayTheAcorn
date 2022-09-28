@@ -153,20 +153,20 @@ public class PlayerInventory : MonoBehaviour
 
     //   S C E N E    M A N A G E R   \\
 
+    public void moveToMainScreen()
+    {
+        SceneManager.LoadScene(0);
+    }
     public void moveToForest()
     {
         SceneManager.LoadScene(1);
     }
     public void moveToBattle()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(2);
     }
     public void moveToAlchemy()
     {
-        SceneManager.LoadScene(2);
-    }
-    public void moveToHome()
-    {
-
+        SceneManager.LoadScene(3);
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85fade80abb2eeb498778f9eb0d19e72, type: 3}
   m_Name: Acorn
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: b7e7251ecd0f379428e6f2fc809d697a, type: 3}
-  damage: {x: 1, y: 3}
+  image: {fileID: 21300000, guid: 1ba2181ccab584298b0f7c14b0796fa9, type: 3}
+  damage: {x: 4, y: 6}
   statusEff: 0
   effectDurationInTurns: 0
