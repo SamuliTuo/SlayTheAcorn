@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playerDiedBattleEnd = null;
     [SerializeField] private Transform fightingText = null;
 
+    [SerializeField] private Image hpBarEnemy = null;
+    [SerializeField] private Image hpBarPlayer = null;
+
     GameObject canvas;
     public bool PlayerAlive { get; set; }
     bool enemyAlive;
@@ -130,6 +133,15 @@ public class GameManager : MonoBehaviour
             }
         }
         BattleEnd();
+    }
+
+    public void UpdateHPBar_enemy(float perc)
+    {
+        hpBarEnemy.fillAmount = perc;
+    }
+    public void UpdateHPBar_Player(float perc)
+    {
+        hpBarPlayer.fillAmount = perc;
     }
 
     float tFightText = 0;
