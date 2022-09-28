@@ -32,9 +32,10 @@ public class ForestInteraction : MonoBehaviour
             {
                 hit.collider.gameObject.SetActive(false);
             } 
-            if(hit.collider.tag == "Acord")
+            if(hit.collider.tag == "Acorn")
             {
                 hit.collider.gameObject.SetActive(false);
+                PlayerInventory.instance.AddAcorns( Mathf.FloorToInt( 50 +  Mathf.Floor(Random.value*10f)*10f) );
             }
             if(this.unstopOnPickup) this.unstopOnPickup.stopped = false;
         }

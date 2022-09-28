@@ -8,6 +8,8 @@ public class OverlayCanvas : MonoBehaviour
 {
     public TMP_Text acorns;
     
+    private float currentAcorns = 0f;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +19,9 @@ public class OverlayCanvas : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        acorns.text = PlayerInventory.instance.acornCount.ToString();
+        int target = PlayerInventory.instance.acornCount;
+        this.currentAcorns += (target-currentAcorns)/40f;
+        if(this.currentAcorns > target-0.25f) this.currentAcorns = target;
+        acorns.text = Mathf.FloorToInt( this.currentAcorns ).ToString();
     }
 }
