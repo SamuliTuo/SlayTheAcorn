@@ -38,7 +38,11 @@ public class BackgroundControl : MonoBehaviour
             this.stopped = true;
             this.current++;
             player.state = WalkIn.WalkState.stop;
-            if(this.current >= this.stopAt.Count ) Invoke("movetonext",1f);
+            if(this.current >= this.stopAt.Count ){
+                this.player.current = 0;
+                this.player.runCombat = true;
+              Invoke("movetonext",1f);  
+            } 
         }
         if(!this.stopped && player.state == WalkIn.WalkState.stop)
         {
