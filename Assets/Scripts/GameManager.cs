@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject flying_potion_slot = null;
     [SerializeField] private GameObject endOfBattleScreen = null;
     [SerializeField] private GameObject playerDiedBattleEnd = null;
+    [SerializeField] private Transform fightingText = null;
 
     GameObject canvas;
     public bool PlayerAlive { get; set; }
@@ -72,7 +73,12 @@ public class GameManager : MonoBehaviour
     {
         BattleStart();
 
-        yield return null;
+        tFightText = 0;
+        fightingText.gameObject.SetActive(true);
+        while (LerpingFightText() == true)
+        {
+            yield return null;
+        }
         while (PlayerAlive && enemyAlive)
         {
             if (currentTurn == Turn.PLAYERTURN)
@@ -124,6 +130,18 @@ public class GameManager : MonoBehaviour
             }
         }
         BattleEnd();
+    }
+
+    float tFightText = 0;
+    bool LerpingFightText()
+    {
+        if (tFightText < 1)
+        {
+            tFightText += Time.deltaTime;
+            return true;
+        }
+        fightingText.gameObject.SetActive(false);
+        return false;
     }
 
     Vector3 startPos = new Vector3(-201, -371, 0);
@@ -187,8 +205,8 @@ public class GameManager : MonoBehaviour
             enemyObject.SetActive(false);
             endOfBattleScreen.SetActive(true);
         }
-        
     }
+
 
     void EnemyTurnStart()
     {
