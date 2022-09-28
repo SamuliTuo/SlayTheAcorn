@@ -117,12 +117,13 @@ public class WalkIn : MonoBehaviour
         if(this.state == WalkState.walkOut){
             updateFrame = true;
             this.outPhase += Time.deltaTime/this.timeToOut;
-            this.outPhase = Mathf.Clamp(this.outPhase, 0f,1f);
+            //this.outPhase = Mathf.Clamp(this.outPhase, 0f,1f);
             this.transform.localPosition = new Vector3(
-                this.outCurve.Evaluate(this.outPhase),
+                this.outCurve.Evaluate(Mathf.Clamp(this.outPhase, 0f,1f)),
                 this.transform.localPosition.y,
                 this.transform.localPosition.z
             );
+            if(this.outPhase >=2f) PlayerInventory.instance.moveToBattle();
             //this.bgC.speed = this.startBGCurve.Evaluate(1f-this.stopPhase);
         }
         else{
