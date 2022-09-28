@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
     private EnemyScriptable enemy;
     private Dictionary<StatusEffect, int> currentStatuses = new Dictionary<StatusEffect, int>();
     private float hp;
+    private float maxHp;
     bool isHallusinating = false;
     bool hasShield = false;
     public bool stunned = false;
@@ -20,6 +21,7 @@ public class EnemyController : MonoBehaviour
         enemy = _enemy;
         game = _game;
         hp = _enemy.enemyHP;
+        maxHp = _enemy.enemyHP;
     }
     
     public bool ReceivePotionAttackAndCheckIfDead(Potion potion, bool halluMultiplier)
@@ -46,10 +48,14 @@ public class EnemyController : MonoBehaviour
         if (hp <= 0)
         {
             hp = 0;
+            game.UpdateHPBar_enemy(hp / maxHp);
             return true;
         }
         else
+        {
+            game.UpdateHPBar_enemy(hp / maxHp);
             return false;
+        }
     }
 
     public void ChooseAttack()
