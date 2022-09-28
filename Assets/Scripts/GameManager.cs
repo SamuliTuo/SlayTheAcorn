@@ -180,6 +180,7 @@ public class GameManager : MonoBehaviour
     void BattleStart()
     {
         EnemyScriptable enemy;
+        print(plrInventory.battle);
         switch (plrInventory.battle)
         {
             case 0:
