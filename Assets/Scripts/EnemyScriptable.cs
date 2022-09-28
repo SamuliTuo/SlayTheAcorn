@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObjects/NewEnemy", order = 1)]
 public class EnemyScriptable : ScriptableObject
 {
+    public Sprite enemySprite = null;
     public float enemyHP = 10;
 
     [Header("Chance means how often will the enemy use: 0 = never, 1 = often")]

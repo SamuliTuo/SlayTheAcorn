@@ -6,7 +6,7 @@ using UnityEngine;
 public class Potion : ScriptableObject
 {
     public Sprite image;
-    public float damage = 1;
+    public Vector2 damage = new Vector2(4, 6);
     public StatusEffect statusEff = StatusEffect.NONE;
     public int effectDurationInTurns = 1;
 }

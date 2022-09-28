@@ -25,7 +25,7 @@ public class EnemyController : MonoBehaviour
         {
             currentStatuses.Add(potion.statusEff, potion.effectDurationInTurns);
         }
-        if (AddHpAndCheckIfDead(potion.damage))
+        if (AddHpAndCheckIfDead(Random.Range(potion.damage.x, potion.damage.y)))
         {
             return true;
         }

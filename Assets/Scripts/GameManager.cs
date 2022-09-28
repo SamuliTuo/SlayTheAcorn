@@ -123,6 +123,7 @@ public class GameManager : MonoBehaviour
     {
         chosenPotion = null;
         enemyObject.GetComponent<EnemyController>().SetEnemy(enemy, this);
+        canvas_enemy.sprite = enemy.enemySprite;
         PlayerAlive = true;
         enemyAlive = true;
         PlayerTurnStart();
