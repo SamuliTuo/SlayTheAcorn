@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playerDiedBattleEnd = null;
     [SerializeField] private Transform fightingText = null;
 
+    [SerializeField] private Image hpBarEnemy = null;
+    [SerializeField] private Image hpBarPlayer = null;
+
     GameObject canvas;
     public bool PlayerAlive { get; set; }
     bool enemyAlive;
@@ -90,12 +93,13 @@ public class GameManager : MonoBehaviour
                 {
                     while (chosenPotion == null)
                         yield return null;
+                    FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/Character/PlayerSling", gameObject);
+
 
                     flying_potion_slot.GetComponent<Image>().sprite = chosenPotion.image;
                     StartCoroutine(ThrowItemToEnemy());
                     if (enemyObject.GetComponent<EnemyController>().ReceivePotionAttackAndCheckIfDead(chosenPotion, plrInventory.isHallusinating) == true)
                     {
-                        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/Character/PlayerSling", gameObject);
                         enemyObject.GetComponent<EnemyController>().ResetEnemy();
                         enemyAlive = false;
                     }
@@ -118,12 +122,12 @@ public class GameManager : MonoBehaviour
                 }
                 else if (enemyObject.GetComponent<EnemyController>().stunned == false)
                 {
+                    FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/Character/EnemyAttack", gameObject);
                     yield return new WaitForSeconds(1);
                     enemyObject.GetComponent<EnemyController>().ChooseAttack();
                     yield return new WaitForSeconds(0.5f);
                     if (PlayerAlive)
                     {
-                        FMODUnity.RuntimeManager.PlayOneShotAttached("event:/SFX/Character/EnemyAttack", gameObject);
                         PlayerTurnStart();
                         print("player turn");
                     }
@@ -132,6 +136,15 @@ public class GameManager : MonoBehaviour
             }
         }
         BattleEnd();
+    }
+
+    public void UpdateHPBar_enemy(float perc)
+    {
+        hpBarEnemy.fillAmount = perc;
+    }
+    public void UpdateHPBar_Player(float perc)
+    {
+        hpBarPlayer.fillAmount = perc;
     }
 
     float tFightText = 0;

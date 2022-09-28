@@ -12,6 +12,7 @@ public class PlayerInventory : MonoBehaviour
 
     private Dictionary<StatusEffect, int> currentStatuses = new Dictionary<StatusEffect, int>();
     [SerializeField] private float playerHP = 50;
+    private float maxHp;
     public bool isHallusinating = false;
     bool hasShield = false;
     public bool stunned = false;
@@ -29,6 +30,11 @@ public class PlayerInventory : MonoBehaviour
             Debug.Log("INSTANCE CREATED");
             DontDestroyOnLoad(this.gameObject);    
         }
+    }
+
+    private void Start()
+    {
+        maxHp = playerHP;
     }
 
     public void AddAcorns(int count) { acornCount += count; }
@@ -133,10 +139,19 @@ public class PlayerInventory : MonoBehaviour
         }
         
         print("player took damage! hp left: " + playerHP);
+        var man = GameObject.Find("GameManager");
         if (playerHP <= 0)
         {
             playerHP = 0;
+            if (man != null)
+            {
+                man.GetComponent<GameManager>().UpdateHPBar_Player(playerHP / maxHp);
+            }
             return true;
+        }
+        if (man != null)
+        {
+            man.GetComponent<GameManager>().UpdateHPBar_Player(playerHP / maxHp);
         }
         return false;
     }
